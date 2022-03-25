@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 
@@ -8,20 +9,22 @@ using UnityEngine.XR.ARFoundation;
 public class ARPlaneDetectionManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject playerInputControl;
+    private PlayerInput playerInputControl;
     [SerializeField]
     private Button placeButton;
     [SerializeField]
     private GameObject scaleSlider;
     [SerializeField]
     private NavigationBaker _navigationBaker;
+    [SerializeField]
+    private GameObject _charaterPrefab;
 
     private ARPlaneManager planeManager;
     private ARPlacementManager placementManager;
 
     private void Awake()
     {
-        playerInputControl.SetActive(false);
+        playerInputControl.gameObject.SetActive(false);
 
         placementManager = GetComponent<ARPlacementManager>();
         planeManager = GetComponent<ARPlaneManager>();
@@ -50,7 +53,8 @@ public class ARPlaneDetectionManager : MonoBehaviour
         //searchForGameButton.SetActive(true);
         scaleSlider.SetActive(false);
         _navigationBaker.BakeNavMesh();
-        playerInputControl.SetActive(true);
+        playerInputControl.gameObject.SetActive(true);
+        playerInputControl.Character = Instantiate(_charaterPrefab, Vector3.zero, Quaternion.identity).GetComponent<NavMeshAgent>();
 
         //infoPanel.text = "Search for to enter a battle or readjust arena";
     }

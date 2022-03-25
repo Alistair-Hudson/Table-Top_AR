@@ -9,8 +9,8 @@ public class PlayerInput : MonoBehaviour
     private Camera _arCamera;
     [SerializeField]
     private Transform _rayCastPoint;
-    [SerializeField]
-    private NavMeshAgent _character;
+
+    public NavMeshAgent Character { get; set; } 
 
     // Update is called once per frame
     void Update()
@@ -20,7 +20,7 @@ public class PlayerInput : MonoBehaviour
             Ray ray = _arCamera.ScreenPointToRay(_rayCastPoint.position);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                _character.SetDestination(hit.point);
+                Character.SetDestination(hit.point);
             }
         }
     }
