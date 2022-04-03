@@ -22,7 +22,6 @@ namespace TableTopAR.AR
             Character = characterMovement.GetComponent<NavMeshAgent>();
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (Input.touchCount > 0)

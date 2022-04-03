@@ -7,25 +7,36 @@ namespace TableTopAR.WorkShop
 {
     public class WorkShopInput : MonoBehaviour
     {
-        [SerializeField]
         private Movement characterMovement;
-
+        private Combat characterCombat;
         private Camera mainCamera;
 
         private void Awake()
         {
+            characterMovement = GetComponent<Movement>();
+            characterCombat = GetComponent<Combat>();
             mainCamera = Camera.main;
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (Input.GetMouseButton(0))
             {
+                bool hitEnemy = false;
                 Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit))
+                RaycastHit[] hits = Physics.RaycastAll(ray);
+                foreach (var hit in hits)
                 {
-                    characterMovement.SetDestination(hit.point);
+                    if (hit.transform.TryGetComponent<CombatTarget>(out CombatTarget target))
+                    {
+                        characterCombat.Attack(target);
+                        hitEnemy = true;
+                        break;
+                    }
+                }
+                if (!hitEnemy && hits.Length > 0)
+                {
+                    characterMovement.SetDestination(hits[0].point);
                 }
             }
         }
