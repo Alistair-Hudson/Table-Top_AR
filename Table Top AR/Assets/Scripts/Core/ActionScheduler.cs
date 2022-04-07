@@ -6,19 +6,19 @@ namespace TableTopAR.Core
 {
     public class ActionScheduler : MonoBehaviour
     {
-        private IAction currentAction;
+        private IAction _currentAction;
 
         public void StartAction(IAction action)
         {
-            if (action == currentAction)
+            if (action == _currentAction)
             {
                 return;
             }
-            if (currentAction != null)
+            if (_currentAction != null)
             {
-                currentAction.Cancel();
+                _currentAction.Cancel();
             }
-            currentAction = action;
+            _currentAction = action;
         }
     }
 }

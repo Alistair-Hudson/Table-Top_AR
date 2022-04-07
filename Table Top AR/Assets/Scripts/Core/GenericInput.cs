@@ -7,13 +7,14 @@ namespace TableTopAR.Core
 {
     public class GenericInput : MonoBehaviour
     {
-        private Movement characterMovement;
-        private Combat characterCombat;
+        private Movement _characterMovement;
+        private Combat _characterCombat;
+
 
         protected virtual void Awake()
         {
-            characterMovement = GetComponent<Movement>();
-            characterCombat = GetComponent<Combat>();
+            _characterMovement = GetComponent<Movement>();
+            _characterCombat = GetComponent<Combat>();
         }
 
         protected void ProcessRaycast(Ray ray)
@@ -24,14 +25,14 @@ namespace TableTopAR.Core
             {
                 if (hit.transform.TryGetComponent<CombatTarget>(out CombatTarget target))
                 {
-                    characterCombat.Attack(target);
+                    _characterCombat.Attack(target);
                     hitEnemy = true;
                     break;
                 }
             }
             if (!hitEnemy && hits.Length > 0)
             {
-                characterMovement.SetDestination(hits[0].point);
+                _characterMovement.SetDestination(hits[0].point);
             }
         }
     }

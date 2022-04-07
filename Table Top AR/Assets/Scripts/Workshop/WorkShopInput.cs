@@ -8,19 +8,19 @@ namespace TableTopAR.WorkShop
 {
     public class WorkShopInput : GenericInput
     {
-        private Camera mainCamera;
+        private Camera _mainCamera;
 
         protected override void Awake()
         {
             base.Awake();
-            mainCamera = Camera.main;    
+            _mainCamera = Camera.main;    
         }
 
         void Update()
         {
             if (Input.GetMouseButton(0))
             {
-                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
                 ProcessRaycast(ray);
             }
         }
