@@ -8,6 +8,7 @@ namespace TableTopAR.WorkShop
 {
     public class WorkShopInput : GenericInput
     {
+#if UNITY_EDITOR
         private Camera _mainCamera;
 
         protected override void Awake()
@@ -24,5 +25,6 @@ namespace TableTopAR.WorkShop
                 ProcessRaycast(ray);
             }
         }
+#endif
     }
 }

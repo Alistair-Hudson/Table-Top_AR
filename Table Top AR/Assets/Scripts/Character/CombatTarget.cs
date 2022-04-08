@@ -4,18 +4,15 @@ using UnityEngine;
 
 namespace TableTopAR.Character
 {
+    [RequireComponent(typeof(Health))]
     public class CombatTarget : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        private Health _health;
+        public Health CharacterHealth { get => _health; private set => _health = value; }
+
+        private void Awake()
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            _health = GetComponent<Health>();
         }
     }
 }

@@ -9,6 +9,7 @@ namespace TableTopAR.AR
 {
     public class PlayerInput : GenericInput
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         [SerializeField]
         private Camera _arCamera;
         [SerializeField]
@@ -25,5 +26,6 @@ namespace TableTopAR.AR
                 ProcessRaycast(ray);
             }
         }
+#endif
     }
 }

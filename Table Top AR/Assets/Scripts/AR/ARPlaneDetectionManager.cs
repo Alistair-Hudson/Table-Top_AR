@@ -10,6 +10,7 @@ namespace TableTopAR.AR
     [RequireComponent(typeof(ARPlacementManager), typeof(ARPlaneManager))]
     public class ARPlaneDetectionManager : MonoBehaviour
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         [SerializeField]
         private PlayerInput playerInputControl;
         [SerializeField]
@@ -68,5 +69,6 @@ namespace TableTopAR.AR
                 plane.gameObject.SetActive(state);
             }
         }
+#endif
     }
 }

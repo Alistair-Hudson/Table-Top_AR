@@ -5,46 +5,78 @@ using TableTopAR.Core;
 
 namespace TableTopAR.Character
 {
+    [RequireComponent(typeof(Movement), typeof(ActionScheduler), typeof(Animator))]
     public class Combat : MonoBehaviour, IAction
     {
         [SerializeField]
-        private float combatRange = 1f;
+        private float _combatRange = 1f;
+        [SerializeField]
+        private float _timeBewteenAttacks = 1.5f;
+        [SerializeField]
+        private float _weaponDamage = 5;
 
-        private Transform target;
-        private Movement movement;
-        private ActionScheduler actionScheduler;
+        private CombatTarget _target;
+        private Movement _movement;
+        private ActionScheduler _actionScheduler;
+        private Animator _animator;
+        private float _timeSinceLastAttack = 0;
 
         private void Awake()
         {
-            movement = GetComponent<Movement>();
-            actionScheduler = GetComponent<ActionScheduler>();
+            _movement = GetComponent<Movement>();
+            _actionScheduler = GetComponent<ActionScheduler>();
+            _animator = GetComponent<Animator>();
         }
 
         private void Update()
         {
-            if (target == null)
+            _timeSinceLastAttack += Time.deltaTime;
+
+            if (_target == null)
             {
                 return;
             }
-            if (Vector3.Distance(transform.position, target.position) > combatRange)
+            if (Vector3.Distance(transform.position, _target.transform.position) > _combatRange)
             {
-                movement.SetDestination(target.position);
+                _movement.SetDestination(_target.transform.position);
             }
             else
             {
-                movement.Cancel();
+                _movement.Cancel();
+                ProcessAttack();
+            }
+        }
+
+        private void ProcessAttack()
+        {
+            if (_target.CharacterHealth.IsDead)
+            {
+                return;
+            }
+
+            if (_timeSinceLastAttack >= _timeBewteenAttacks)
+            {
+                _animator.SetTrigger("attack");
+                _timeSinceLastAttack = 0;
             }
         }
 
         public void Attack(CombatTarget combatTarget)
         {
-            actionScheduler.StartAction(this);
-            target = combatTarget.transform;
+            _actionScheduler.StartAction(this);
+            _target = combatTarget;
         }
 
         public void Cancel()
         {
-            target = null;
+            _animator.SetTrigger("stopAttack");
+            _target = null;
+        }
+
+        //Animation Event
+        private void Hit()
+        {
+            _target.CharacterHealth.TakeDamage(_weaponDamage);
         }
     }
 }

@@ -44,5 +44,17 @@ namespace TableTopAR.Character
         {
             navMesh.isStopped = true;
         }
+
+        #region Animation Events
+        private void FootR()
+        {
+
+        }
+
+        private void FootL()
+        {
+
+        }
+        #endregion
     }
 }
