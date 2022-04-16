@@ -19,7 +19,7 @@ namespace TableTopAR.Character
         private Movement _movement;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
-        private float _timeSinceLastAttack = 0;
+        private float _timeSinceLastAttack = Mathf.Infinity;
 
         private void Awake()
         {
@@ -56,12 +56,19 @@ namespace TableTopAR.Character
 
             if (_timeSinceLastAttack >= _timeBewteenAttacks)
             {
+                transform.LookAt(_target.transform);
+                _animator.ResetTrigger("stopAttack");
                 _animator.SetTrigger("attack");
                 _timeSinceLastAttack = 0;
             }
         }
 
-        public void Attack(CombatTarget combatTarget)
+        public bool CanAttack(CombatTarget combatTarget)
+        {
+            return !combatTarget.CharacterHealth.IsDead;
+        }
+
+        public void SetAttackTarget(CombatTarget combatTarget)
         {
             _actionScheduler.StartAction(this);
             _target = combatTarget;
@@ -69,6 +76,7 @@ namespace TableTopAR.Character
 
         public void Cancel()
         {
+            _animator.ResetTrigger("attack");
             _animator.SetTrigger("stopAttack");
             _target = null;
         }
@@ -76,6 +84,10 @@ namespace TableTopAR.Character
         //Animation Event
         private void Hit()
         {
+            if (_target == null)
+            {
+                return;
+            }
             _target.CharacterHealth.TakeDamage(_weaponDamage);
         }
     }

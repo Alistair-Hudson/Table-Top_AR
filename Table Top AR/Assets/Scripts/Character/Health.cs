@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TableTopAR.Core;
 using UnityEngine;
 
 namespace TableTopAR.Character
@@ -28,6 +29,7 @@ namespace TableTopAR.Character
             if (_currentHealth <= 0)
             {
                 isDead = true;
+                GetComponent<ActionScheduler>().CancelCurrentAction();
                 _animator.SetTrigger("death");
             }
         }
