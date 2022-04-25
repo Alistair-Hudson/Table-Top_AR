@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TableTopAR.Character;
@@ -13,9 +14,18 @@ namespace TableTopAR.AI
         private float _chaseDistance = 5f;
         [SerializeField]
         private float _suspectTime = 2f;
+        [SerializeField]
+        private PatrolPath _patrolPath;
+        [SerializeField]
+        private float _waypointTolerence = 0.5f;
+        [SerializeField]
+        private float _maxWayPointDwellTime = 5f;
         
         private Vector3 _guadPos;
-        private float _timeSinceSuspected = 0;
+        private float _timeSinceSuspected = Mathf.Infinity;
+        private float _timeSinceArrivedAtWaypoint = Mathf.Infinity;
+        private float _wayPointDwellTime;
+        private int _currentWaypoint = 0;
 
         private GenericInput _player;
         private Movement _movement;
@@ -53,8 +63,43 @@ namespace TableTopAR.AI
             }
             else
             {
-                _movement.SetDestination(_guadPos);
+                Patrol();
+                _timeSinceArrivedAtWaypoint += Time.deltaTime;
             }
+        }
+
+        private void Patrol()
+        {
+            Vector3 nextPosition = _guadPos;
+            if (_patrolPath != null)
+            {
+                if (AtWayPoint())
+                {
+                    _timeSinceArrivedAtWaypoint = 0;
+                    _wayPointDwellTime = UnityEngine.Random.Range(0f, _maxWayPointDwellTime);
+                    CycleWayPoint();
+                }
+                nextPosition = GetCurrentWaypoint();
+            }
+            if (_timeSinceArrivedAtWaypoint > _wayPointDwellTime)
+            {
+                _movement.SetDestination(nextPosition);
+            }
+        }
+
+        private Vector3 GetCurrentWaypoint()
+        {
+            return _patrolPath.GetWayPoint(_currentWaypoint);
+        }
+
+        private void CycleWayPoint()
+        {
+            _currentWaypoint = _patrolPath.GetNextIndex(_currentWaypoint);
+        }
+
+        private bool AtWayPoint()
+        {
+            return (Vector3.Distance(transform.position, GetCurrentWaypoint()) <= _waypointTolerence);
         }
 
         //Called by Unity
