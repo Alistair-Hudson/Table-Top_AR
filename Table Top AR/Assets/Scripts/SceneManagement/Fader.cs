@@ -20,17 +20,17 @@ namespace TableTopAR.SceneManagement
         //Look at how we did fade in out
         public IEnumerator FadeInOut(float alpha)
         {
-            AnimationCurve sCurve = AnimationCurve.EaseInOut(0, _canvasGroup.alpha, _fadeTime, alpha);
+            var initAlpha = _canvasGroup.alpha;
+            AnimationCurve sCurve = AnimationCurve.EaseInOut(0, 0, _fadeTime, 1);
             float time = 0;
             while (time <= _fadeTime)
             {
+                var t = sCurve.Evaluate(time);
+                _canvasGroup.alpha = Mathf.Lerp(initAlpha, alpha, t);
+                yield return null;
                 time += Time.deltaTime;
-                var delta = sCurve.Evaluate(time);
-                _canvasGroup.alpha = delta;
             }
             _canvasGroup.alpha = alpha; 
-
-            yield return null;
         }
     }
 }
