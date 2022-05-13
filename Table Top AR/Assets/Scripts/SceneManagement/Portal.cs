@@ -38,11 +38,15 @@ namespace TableTopAR.SceneManagement
             
             Fader fader = FindObjectOfType<Fader>();
             yield return fader.FadeInOut(1);
-            
+
+            SavingWrapper wrapper = FindObjectOfType<SavingWrapper>();
+            wrapper.Save();
             yield return SceneManager.LoadSceneAsync(_sceneIndexToLoad);
+            wrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
+            wrapper.Save();
 
             yield return new WaitForSeconds(1);
             yield return fader.FadeInOut(0);

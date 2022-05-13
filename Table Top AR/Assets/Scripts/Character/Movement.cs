@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using TableTopAR.Core;
+using TableTopAR.Saving;
 
 namespace TableTopAR.Character
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(Animator), typeof(Health))]
     [RequireComponent(typeof(ActionScheduler))]
-    public class Movement : MonoBehaviour, IAction
+    public class Movement : MonoBehaviour, IAction, ISaveable
     {
+        [System.Serializable]
+        public struct MovementSaveData
+        {
+            public SerializableVector3 Position;
+            public SerializableVector3 Rotation;
+        }
+
         private NavMeshAgent _navMesh;
         private Animator _animator;
         private ActionScheduler _actionScheduler;
@@ -61,5 +69,24 @@ namespace TableTopAR.Character
 
         }
         #endregion
+
+        public object CaptureState()
+        {
+            MovementSaveData data = new MovementSaveData
+            {
+                Position = new SerializableVector3(transform.position),
+                Rotation = new SerializableVector3(transform.eulerAngles)
+            };
+            return data;
+        }
+
+        public void RestoreState(object state)
+        {
+            MovementSaveData data = (MovementSaveData)state;
+            _navMesh.enabled = false;
+            transform.position = data.Position.ToVector();
+            transform.eulerAngles = data.Rotation.ToVector();
+            _navMesh.enabled = true;
+        }
     }
 }

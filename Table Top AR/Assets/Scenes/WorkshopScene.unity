@@ -313,6 +313,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1617189065070346409, guid: 39a10dc3765bff940b434ebbced85f0b, type: 3}
+      propertyPath: uniqueIdentifier
+      value: fc2adaa5-bf9a-4bb1-98bc-cffdb3ee7395
+      objectReference: {fileID: 0}
     - target: {fileID: 3286430612039223294, guid: 39a10dc3765bff940b434ebbced85f0b, type: 3}
       propertyPath: _patrolPath
       value: 
@@ -378,6 +382,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1617189065070346409, guid: 39a10dc3765bff940b434ebbced85f0b, type: 3}
+      propertyPath: uniqueIdentifier
+      value: 960841d0-14a3-48de-b65a-03dcecca730f
+      objectReference: {fileID: 0}
     - target: {fileID: 4420449944351803883, guid: 39a10dc3765bff940b434ebbced85f0b, type: 3}
       propertyPath: m_Name
       value: BasicEnemy (1)
@@ -514,6 +522,10 @@ PrefabInstance:
     - target: {fileID: 4844210782658025444, guid: 97441da07dc0a2a47a62924ba699f182, type: 3}
       propertyPath: _combatRange
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097698153756839728, guid: 97441da07dc0a2a47a62924ba699f182, type: 3}
+      propertyPath: uniqueIdentifier
+      value: 1dfbd85d-4357-47e2-81d1-99c73ac149cd
       objectReference: {fileID: 0}
     - target: {fileID: 9202717740260738674, guid: 97441da07dc0a2a47a62924ba699f182, type: 3}
       propertyPath: m_Name

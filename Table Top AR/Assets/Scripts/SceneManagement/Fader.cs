@@ -17,6 +17,11 @@ namespace TableTopAR.SceneManagement
             _canvasGroup = GetComponent<CanvasGroup>();    
         }
 
+        public void ImediateFadeOut()
+        {
+            _canvasGroup.alpha = 1;
+        }
+
         //Look at how we did fade in out
         public IEnumerator FadeInOut(float alpha)
         {
