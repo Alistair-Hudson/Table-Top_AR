@@ -57,6 +57,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ad43ee3802caa04ab0928a13c462a56, type: 3}
+--- !u!4 &1269421382191280426 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 496924, guid: 5ad43ee3802caa04ab0928a13c462a56, type: 3}
+  m_PrefabInstance: {fileID: 1269421382191309878}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3001741463933155713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -120,10 +125,34 @@ PrefabInstance:
       propertyPath: m_Avatar
       value: 
       objectReference: {fileID: 9000000, guid: e2958561779b1a748a4246b9d0c0b309, type: 3}
+    - target: {fileID: 2128287877038474644, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3d98690bd05504245a5f6b582d73d51d, type: 2}
     - target: {fileID: 6205622684725198835, guid: de4d949d923b7b54693e68761235fb85, type: 3}
       propertyPath: m_Name
       value: PlayerBase
       objectReference: {fileID: 0}
+    - target: {fileID: 7679283875964071525, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: _weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: e630b03a33a54584cb9feaeaf1e7b83e, type: 2}
+    - target: {fileID: 7679283875964071525, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: _weaponPrefab
+      value: 
+      objectReference: {fileID: 187911565899494493, guid: eb72ac6a247dab441a35f922f509fa2c, type: 3}
+    - target: {fileID: 7679283875964071525, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: _defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 44cbcebcbfbec734c9e591a1bc53afb3, type: 2}
+    - target: {fileID: 7679283875964071525, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: _handTransform
+      value: 
+      objectReference: {fileID: 1269421382191280426}
+    - target: {fileID: 7679283875964071525, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: _weaponOverride
+      value: 
+      objectReference: {fileID: 22100000, guid: ab9b708528bb3d241aa4d733a45d16f0, type: 2}
     - target: {fileID: 9022737401993279153, guid: de4d949d923b7b54693e68761235fb85, type: 3}
       propertyPath: uniqueIdentifier
       value: Player

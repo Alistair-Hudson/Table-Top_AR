@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TableTopAR.Core;
+using TableTopAR.Items.Equipment.Weapons;
 
 namespace TableTopAR.Character
 {
@@ -9,23 +10,29 @@ namespace TableTopAR.Character
     public class Combat : MonoBehaviour, IAction
     {
         [SerializeField]
-        private float _combatRange = 1f;
+        private Transform _handTransform = null;
         [SerializeField]
-        private float _timeBewteenAttacks = 1.5f;
-        [SerializeField]
-        private float _weaponDamage = 5;
+        private GenericWeapon _defaultWeapon = null;
 
         private CombatTarget _target;
         private Movement _movement;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
         private float _timeSinceLastAttack = Mathf.Infinity;
+        private GenericWeapon _currentWeapon = null;
 
         private void Awake()
         {
             _movement = GetComponent<Movement>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
+            EquipWeapon(_defaultWeapon);
+        }
+
+        public void EquipWeapon(GenericWeapon weapon)
+        {
+            _currentWeapon = weapon;
+            weapon.Spawn(_handTransform, _animator);
         }
 
         private void Update()
@@ -36,7 +43,7 @@ namespace TableTopAR.Character
             {
                 return;
             }
-            if (Vector3.Distance(transform.position, _target.transform.position) > _combatRange)
+            if (Vector3.Distance(transform.position, _target.transform.position) > _currentWeapon.CombatRannge)
             {
                 _movement.SetDestination(_target.transform.position);
             }
@@ -54,7 +61,7 @@ namespace TableTopAR.Character
                 return;
             }
 
-            if (_timeSinceLastAttack >= _timeBewteenAttacks)
+            if (_timeSinceLastAttack >= _currentWeapon.TimeBetweenAttacks)
             {
                 transform.LookAt(_target.transform);
                 _animator.ResetTrigger("stopAttack");
@@ -88,7 +95,7 @@ namespace TableTopAR.Character
             {
                 return;
             }
-            _target.CharacterHealth.TakeDamage(_weaponDamage);
+            _target.CharacterHealth.TakeDamage(_currentWeapon.WeaponDamage);
         }
     }
 }
