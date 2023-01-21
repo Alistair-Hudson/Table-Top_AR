@@ -10,7 +10,9 @@ namespace TableTopAR.Character
     public class Combat : MonoBehaviour, IAction
     {
         [SerializeField]
-        private Transform _handTransform = null;
+        private Transform _rhTransform = null;
+        [SerializeField]
+        private Transform _lhTransform = null;
         [SerializeField]
         private GenericWeapon _defaultWeapon = null;
 
@@ -32,7 +34,7 @@ namespace TableTopAR.Character
         public void EquipWeapon(GenericWeapon weapon)
         {
             _currentWeapon = weapon;
-            weapon.Spawn(_handTransform, _animator);
+            weapon.Spawn(_rhTransform, _lhTransform, _animator);
         }
 
         private void Update()
@@ -96,6 +98,11 @@ namespace TableTopAR.Character
                 return;
             }
             _target.CharacterHealth.TakeDamage(_currentWeapon.WeaponDamage);
+        }
+
+        private void Shoot()
+        {
+            _currentWeapon.FireProjectile(_rhTransform, _lhTransform, _target.GetComponent<Health>());
         }
     }
 }
