@@ -9,16 +9,39 @@ namespace TableTopAR.Core
     public class Projectile : MonoBehaviour
     {
         [SerializeField]
+        private GameObject onHitEffect = null;
+        [SerializeField]
+        private GameObject[] destroyOnHit = null;
+        [SerializeField]
         private float speed = 1;
+        [SerializeField]
+        private float maxLifeTime = 10;
+        [SerializeField]
+        private float lifeAfterImpact = 2;
+        [SerializeField]
+        private bool isHoming = false;
 
         public Health Target { get; set; }
         public float Damage { get; set; }
 
+        private void Start()
+        {
+            transform.LookAt(GetAimLocation());
+        }
+
         void Update()
         {
             if (Target == null) return;
-            transform.LookAt(GetAimLocation());
+            if (isHoming && !Target.IsDead)
+            {
+                transform.LookAt(GetAimLocation());
+            }
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            
+            if ((maxLifeTime -= Time.deltaTime) <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
 
         private Vector3 GetAimLocation()
@@ -36,8 +59,18 @@ namespace TableTopAR.Core
             if (other.TryGetComponent<Health>(out var hit))
             {
                 if (hit != Target) return;
+                if (hit.IsDead) return;
+                if (onHitEffect != null)
+                {
+                    Instantiate(onHitEffect, transform.position, transform.rotation);
+                }
                 hit.TakeDamage(Damage);
-                Destroy(gameObject);
+
+                foreach (var toDestory in destroyOnHit)
+                {
+                    Destroy(toDestory);
+                }
+                Destroy(gameObject, lifeAfterImpact);
             }
         }
     }

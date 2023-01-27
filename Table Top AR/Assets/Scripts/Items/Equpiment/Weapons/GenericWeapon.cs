@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TableTopAR.Character;
@@ -27,18 +28,46 @@ namespace TableTopAR.Items.Equipment.Weapons
 
         [SerializeField]
         private Projectile projectilePrefab = null;
+        private object weapon;
+        const string weaponName = "Weapon";
 
         public bool HasProjectile { get => projectilePrefab == null; }
 
         public void Spawn(Transform rhTransform, Transform lhTransform, Animator animator) {
+
+            DestroyCurrentWeapon(rhTransform, lhTransform);
+
             if (_weaponPrefab != null)
             {
                 Transform handTransform = isRighthanded ? rhTransform : lhTransform;
-                Instantiate(_weaponPrefab, handTransform);
+                var weapon = Instantiate(_weaponPrefab, handTransform);
+                weapon.name = weaponName;
             }
             if (_weaponOverride != null)
             {
                 animator.runtimeAnimatorController = _weaponOverride;
+            }
+            else
+            {
+                var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
+                if (overrideController != null)
+                {
+                    animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
+                }
+            }
+        }
+
+        private void DestroyCurrentWeapon(Transform rhTransform, Transform lhTransform)
+        {
+            Transform oldWeapon = rhTransform.Find(weaponName);
+            if (oldWeapon == null)
+            {
+                oldWeapon = lhTransform.Find(weaponName);
+            }
+            if (oldWeapon != null)
+            {
+                oldWeapon.name = "DESTROYING";
+                Destroy(oldWeapon.gameObject);
             }
         }
 

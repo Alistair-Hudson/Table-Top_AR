@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TableTopAR.Core;
 using TableTopAR.Items.Equipment.Weapons;
+using TableTopAR.Saving;
 
 namespace TableTopAR.Character
 {
     [RequireComponent(typeof(Movement), typeof(ActionScheduler), typeof(Animator))]
-    public class Combat : MonoBehaviour, IAction
+    public class Combat : MonoBehaviour, IAction, ISaveable
     {
         [SerializeField]
         private Transform _rhTransform = null;
@@ -28,7 +29,11 @@ namespace TableTopAR.Character
             _movement = GetComponent<Movement>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
-            EquipWeapon(_defaultWeapon);
+            
+            if (_currentWeapon == null)
+            {
+                EquipWeapon(_defaultWeapon);
+            }
         }
 
         public void EquipWeapon(GenericWeapon weapon)
@@ -103,6 +108,22 @@ namespace TableTopAR.Character
         private void Shoot()
         {
             _currentWeapon.FireProjectile(_rhTransform, _lhTransform, _target.GetComponent<Health>());
+        }
+
+        public object CaptureState()
+        {
+            return _currentWeapon.name;
+        }
+
+        public void RestoreState(object state)
+        {
+            string weaponName = (string)state;
+            GenericWeapon weapon = Resources.Load<GenericWeapon>("Weapons/" + defaultWeaponName);
+            if (weapon == null)
+            {
+                weapon = _defaultWeapon;
+            }
+            EquipWeapon(weapon);
         }
     }
 }
