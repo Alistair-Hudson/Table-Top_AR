@@ -21,6 +21,7 @@ namespace TableTopAR.Core
         [SerializeField]
         private bool isHoming = false;
 
+        public GameObject Instigator { get; set; }
         public Health Target { get; set; }
         public float Damage { get; set; }
 
@@ -64,7 +65,7 @@ namespace TableTopAR.Core
                 {
                     Instantiate(onHitEffect, transform.position, transform.rotation);
                 }
-                hit.TakeDamage(Damage);
+                hit.TakeDamage(Instigator, Damage);
 
                 foreach (var toDestory in destroyOnHit)
                 {

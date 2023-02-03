@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TableTopAR.Core;
 using UnityEngine;
 using TableTopAR.Saving;
+using TableTopAR.Stats;
 
 namespace TableTopAR.Character
 {
@@ -16,15 +17,18 @@ namespace TableTopAR.Character
         private float _currentHealth;
         private bool isDead = false;
 
+        public float CurrentHealth { get => _currentHealth; }
+        public float HealthPercentage { get => 100 * _currentHealth / _maxHealth; }
         public bool IsDead { get => isDead; private set => isDead = value; }
 
         private void Awake()
         {
+            _maxHealth = GetComponent<BaseStats>().GetHealth();
             _currentHealth = _maxHealth;
             _animator = GetComponent<Animator>();
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(GameObject instigator, float damage)
         {
             _currentHealth -= damage;
             if (_currentHealth <= 0)
@@ -32,6 +36,10 @@ namespace TableTopAR.Character
                 isDead = true;
                 GetComponent<ActionScheduler>().CancelCurrentAction();
                 _animator.SetTrigger("death");
+                if (instigator.TryGetComponent<Experience>(out var experience))
+                {
+                    experience.GainExperience(GetComponent<BaseStats>().GetXPReward());
+                }
             }
         }
 

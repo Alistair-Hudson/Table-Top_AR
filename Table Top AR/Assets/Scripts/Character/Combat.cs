@@ -102,12 +102,12 @@ namespace TableTopAR.Character
             {
                 return;
             }
-            _target.CharacterHealth.TakeDamage(_currentWeapon.WeaponDamage);
+            _target.CharacterHealth.TakeDamage(gameObject, _currentWeapon.WeaponDamage);
         }
 
         private void Shoot()
         {
-            _currentWeapon.FireProjectile(_rhTransform, _lhTransform, _target.GetComponent<Health>());
+            _currentWeapon.FireProjectile(_rhTransform, _lhTransform, _target.GetComponent<Health>(), gameObject);
         }
 
         public object CaptureState()
@@ -118,7 +118,7 @@ namespace TableTopAR.Character
         public void RestoreState(object state)
         {
             string weaponName = (string)state;
-            GenericWeapon weapon = Resources.Load<GenericWeapon>("Weapons/" + defaultWeaponName);
+            GenericWeapon weapon = Resources.Load<GenericWeapon>("Weapons/" + weaponName);
             if (weapon == null)
             {
                 weapon = _defaultWeapon;
