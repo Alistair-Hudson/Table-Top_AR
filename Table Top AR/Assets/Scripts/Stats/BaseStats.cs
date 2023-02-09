@@ -9,19 +9,42 @@ namespace TableTopAR.Stats
     {
         [Range(1, 100)]
         [SerializeField]
-        private int statringLevel = 1;
+        private int startingLevel = 1;
         [SerializeField]
         private CharacterClass characterClass;
         [SerializeField]
         Progression progression = null;
-        public float GetHealth()
+
+        private int currentLevel = 0;
+
+        public int CurrentLevel { get => currentLevel; }
+
+        private void Awake()
         {
-            return progression.GetHealth(characterClass, statringLevel);
+            currentLevel = CalculateLevel();
         }
 
-        public int GetXPReward()
+        public float GetStat(Stats stat)
         {
-            return 10;
+            return progression.GetStat(stat, characterClass, CalculateLevel());
+        }
+
+        public int CalculateLevel()
+        {
+            var experience = GetComponent<Experience>();
+            if (experience == null) return startingLevel;
+
+            float currenXP = experience.TotalExperience;
+            int penultimateLevel = progression.GetLevels(Stats.XPToLevel, characterClass);
+            for (int i = 1; i <= penultimateLevel; i++)
+            {
+                float xpToLevel = progression.GetStat(Stats.XPToLevel, characterClass, i);
+                if (currenXP < xpToLevel)
+                {
+                    return i;
+                }
+            }
+            return penultimateLevel + 1;
         }
     }
 }

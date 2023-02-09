@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,16 +33,42 @@ namespace TableTopAR.Stats
         [SerializeField]
         private ProgressionCharacterClass[] progressionCharacter = null;
 
-        public float GetHealth(CharacterClass characterClass, int level)
+        private Dictionary<CharacterClass, Dictionary<Stats, float[]>> statLookUp = null;
+
+        public float GetStat(Stats stat, CharacterClass characterClass, int level)
         {
+            if (statLookUp == null)
+            {
+                BuildLookUp();
+            }
+            
+            float[] levels = statLookUp[characterClass][stat];
+            return (level <= levels.Length ? levels[level - 1] : levels[levels.Length - 1]);
+        }
+
+        private void BuildLookUp()
+        {
+            statLookUp = new Dictionary<CharacterClass, Dictionary<Stats, float[]>>();
             foreach (var pc in progressionCharacter)
             {
-                if (pc.CharacterClass == characterClass)
+                var statTable = new Dictionary<Stats, float[]>();
+                foreach (ProgressionStat ps in pc.Stats)
                 {
-                    //return pc.Health[level - 1];
+                    statTable.Add(ps.Stat, ps.Levels);
                 }
+                statLookUp.Add(pc.CharacterClass, statTable);
             }
-            return 0;
+        }
+
+        public int GetLevels(Stats stat, CharacterClass characterClass)
+        {
+            if (statLookUp == null)
+            {
+                BuildLookUp();
+            }
+
+            float[] levles = statLookUp[characterClass][stat];
+            return levles.Length;
         }
     }
 }

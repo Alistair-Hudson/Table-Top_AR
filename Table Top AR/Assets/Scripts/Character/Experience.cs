@@ -1,16 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using TableTopAR.Saving;
 using UnityEngine;
 
-namespace TableTopAR.Character
+namespace TableTopAR.Stats
 {
-    public class Experience : MonoBehaviour
+    public class Experience : MonoBehaviour, ISaveable
     {
-        private int totalExperience = 0;
+        private float totalExperience = 0;
+        public float TotalExperience { get => totalExperience; }
 
-        public void GainExperience(int gained)
+        public void GainExperience(float gained)
         {
             totalExperience += gained;
+        }
+
+        public object CaptureState()
+        {
+            return totalExperience;
+        }
+
+        public void RestoreState(object state)
+        {
+            totalExperience = (float)state;
         }
     }
 }

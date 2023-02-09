@@ -10,11 +10,9 @@ namespace TableTopAR.Character
     [RequireComponent(typeof(Animator))]
     public class Health : MonoBehaviour, ISaveable
     {
-        [SerializeField]
-        private float _maxHealth = 100;
-
+        private float _maxHealth = -1;
         private Animator _animator;
-        private float _currentHealth;
+        private float _currentHealth = -1;
         private bool isDead = false;
 
         public float CurrentHealth { get => _currentHealth; }
@@ -23,8 +21,11 @@ namespace TableTopAR.Character
 
         private void Awake()
         {
-            _maxHealth = GetComponent<BaseStats>().GetHealth();
-            _currentHealth = _maxHealth;
+            _maxHealth = GetComponent<BaseStats>().GetStat(Stats.Stats.Health);
+            if (_currentHealth < 0)
+            {
+                _currentHealth = _maxHealth;
+            }
             _animator = GetComponent<Animator>();
         }
 
@@ -38,7 +39,7 @@ namespace TableTopAR.Character
                 _animator.SetTrigger("death");
                 if (instigator.TryGetComponent<Experience>(out var experience))
                 {
-                    experience.GainExperience(GetComponent<BaseStats>().GetXPReward());
+                    experience.GainExperience(GetComponent<BaseStats>().GetStat(Stats.Stats.XPReward));
                 }
             }
         }
@@ -53,6 +54,7 @@ namespace TableTopAR.Character
             _currentHealth = (float)state;
             if (_currentHealth <= 0)
             {
+                _currentHealth = 0;
                 isDead = true;
                 GetComponent<ActionScheduler>().CancelCurrentAction();
                 _animator.SetTrigger("death");
