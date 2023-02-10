@@ -24,6 +24,9 @@ namespace TableTopAR.Items.Equipment.Weapons
         private float _weaponDamage = 5;
         public float WeaponDamage { get => _weaponDamage; }
         [SerializeField]
+        private float weaponDamageBonus = 0;
+        public float WeaponDamageBonus { get => weaponDamageBonus; }
+        [SerializeField]
         private bool isRighthanded = true;
 
         [SerializeField]
@@ -71,13 +74,13 @@ namespace TableTopAR.Items.Equipment.Weapons
             }
         }
 
-        public void FireProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator)
+        public void FireProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator, float characterBaseDamage)
         {
             Transform handTransform = isRighthanded ? rightHand : leftHand;
             Projectile projectileInstance = Instantiate(projectilePrefab, handTransform);
             projectileInstance.Target = target;
             projectileInstance.Instigator = instigator;
-            projectileInstance.Damage = WeaponDamage;
+            projectileInstance.Damage = characterBaseDamage;
         }
     }
 }

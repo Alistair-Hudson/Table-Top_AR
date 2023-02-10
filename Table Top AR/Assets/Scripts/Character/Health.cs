@@ -4,6 +4,7 @@ using TableTopAR.Core;
 using UnityEngine;
 using TableTopAR.Saving;
 using TableTopAR.Stats;
+using System;
 
 namespace TableTopAR.Character
 {
@@ -14,19 +15,29 @@ namespace TableTopAR.Character
         private Animator _animator;
         private float _currentHealth = -1;
         private bool isDead = false;
+        private BaseStats baseStats;
 
         public float CurrentHealth { get => _currentHealth; }
+        public float MaxHealth { get => _maxHealth; }
         public float HealthPercentage { get => 100 * _currentHealth / _maxHealth; }
         public bool IsDead { get => isDead; private set => isDead = value; }
 
-        private void Awake()
+        private void Start()
         {
-            _maxHealth = GetComponent<BaseStats>().GetStat(Stats.Stats.Health);
+            baseStats = GetComponent<BaseStats>();
+            baseStats.onLevelChange += UpdateHealth;
+            _maxHealth = baseStats.GetStat(Stats.Stats.Health);
             if (_currentHealth < 0)
             {
                 _currentHealth = _maxHealth;
             }
             _animator = GetComponent<Animator>();
+        }
+
+        private void UpdateHealth()
+        {
+            _maxHealth = baseStats.GetStat(Stats.Stats.Health);
+            _currentHealth = _maxHealth;
         }
 
         public void TakeDamage(GameObject instigator, float damage)

@@ -4,7 +4,8 @@ namespace TableTopAR.Stats
     {
         Health = 0,
         XPReward,
-        XPToLevel
+        XPToLevel,
+        BaseDamage
     }
 }
 

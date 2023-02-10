@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TableTopAR.Saving;
@@ -10,9 +11,12 @@ namespace TableTopAR.Stats
         private float totalExperience = 0;
         public float TotalExperience { get => totalExperience; }
 
+        public event Action onExperienceGained;
+
         public void GainExperience(float gained)
         {
             totalExperience += gained;
+            onExperienceGained();
         }
 
         public object CaptureState()

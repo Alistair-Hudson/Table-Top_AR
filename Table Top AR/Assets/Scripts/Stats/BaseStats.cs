@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,25 +14,90 @@ namespace TableTopAR.Stats
         [SerializeField]
         private CharacterClass characterClass;
         [SerializeField]
-        Progression progression = null;
+        private Progression progression = null;
+        [SerializeField]
+        private bool useModifiers = false;
 
         private int currentLevel = 0;
+        private Experience experience;
 
         public int CurrentLevel { get => currentLevel; }
 
-        private void Awake()
+        public event Action onLevelChange;
+
+        private void Start()
         {
+            experience = GetComponent<Experience>();
             currentLevel = CalculateLevel();
+            if (experience != null)
+            {
+                experience.onExperienceGained += UpdateLevel;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (experience != null)
+            {
+                experience.onExperienceGained -= UpdateLevel;
+            }
+        }
+
+        private void UpdateLevel()
+        {
+            int newLevel = CalculateLevel();
+            if (newLevel != currentLevel)
+            {
+                currentLevel = newLevel;
+                onLevelChange();
+            }
         }
 
         public float GetStat(Stats stat)
         {
-            return progression.GetStat(stat, characterClass, CalculateLevel());
+            float statTotal = progression.GetStat(stat, characterClass, CalculateLevel());
+            if (useModifiers)
+            {
+                statTotal += AdditiveModifiers(stat);
+                statTotal *= PercentageModifiers(stat);
+            }
+            return statTotal;
+        }
+
+        private float PercentageModifiers(Stats stat)
+        {
+            float percentageTotal = 100;
+            var modifiers = GetComponents<IStatModifier>();
+            foreach (var modifier in modifiers)
+            {
+                var statMods = modifier.GetPercentageModifier(stat);
+                foreach (var statMod in statMods)
+                {
+                    percentageTotal += statMod;
+                }
+            }
+
+            return percentageTotal / 100;
+        }
+
+        private float AdditiveModifiers(Stats stat)
+        {
+            float statTotal = 0;
+            var modifiers = GetComponents<IStatModifier>();
+            foreach (var modifier in modifiers)
+            {
+                var statMods = modifier.GetAdditiveModifier(stat);
+                foreach (var statMod in statMods)
+                {
+                    statTotal += statMod;
+                }
+            }
+
+            return statTotal;
         }
 
         public int CalculateLevel()
         {
-            var experience = GetComponent<Experience>();
             if (experience == null) return startingLevel;
 
             float currenXP = experience.TotalExperience;

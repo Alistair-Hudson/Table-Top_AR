@@ -4,11 +4,12 @@ using UnityEngine;
 using TableTopAR.Core;
 using TableTopAR.Items.Equipment.Weapons;
 using TableTopAR.Saving;
+using TableTopAR.Stats;
 
 namespace TableTopAR.Character
 {
     [RequireComponent(typeof(Movement), typeof(ActionScheduler), typeof(Animator))]
-    public class Combat : MonoBehaviour, IAction, ISaveable
+    public class Combat : MonoBehaviour, IAction, ISaveable, IStatModifier
     {
         [SerializeField]
         private Transform _rhTransform = null;
@@ -23,9 +24,11 @@ namespace TableTopAR.Character
         private Animator _animator;
         private float _timeSinceLastAttack = Mathf.Infinity;
         private GenericWeapon _currentWeapon = null;
+        private BaseStats baseStats;
 
-        private void Awake()
+        private void Start()
         {
+            baseStats = GetComponent<BaseStats>();
             _movement = GetComponent<Movement>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
@@ -102,12 +105,13 @@ namespace TableTopAR.Character
             {
                 return;
             }
-            _target.CharacterHealth.TakeDamage(gameObject, _currentWeapon.WeaponDamage);
+            float baseDamage = baseStats.GetStat(Stats.Stats.BaseDamage);
+            _target.CharacterHealth.TakeDamage(gameObject, baseDamage);
         }
 
         private void Shoot()
         {
-            _currentWeapon.FireProjectile(_rhTransform, _lhTransform, _target.GetComponent<Health>(), gameObject);
+            _currentWeapon.FireProjectile(_rhTransform, _lhTransform, _target.GetComponent<Health>(), gameObject, baseStats.GetStat(Stats.Stats.BaseDamage));
         }
 
         public object CaptureState()
@@ -124,6 +128,32 @@ namespace TableTopAR.Character
                 weapon = _defaultWeapon;
             }
             EquipWeapon(weapon);
+        }
+
+        public IEnumerable<float> GetAdditiveModifier(Stats.Stats stat)
+        {
+            switch (stat)
+            {
+                case Stats.Stats.BaseDamage:
+                    yield return _currentWeapon.WeaponDamage;
+                    break;
+                default:
+                    yield return 0;
+                    break;
+            }
+        }
+
+        public IEnumerable<float> GetPercentageModifier(Stats.Stats stat)
+        {
+            switch (stat)
+            {
+                case Stats.Stats.BaseDamage:
+                    yield return _currentWeapon.WeaponDamageBonus;
+                    break;
+                default:
+                    yield return 0;
+                    break;
+            }
         }
     }
 }
