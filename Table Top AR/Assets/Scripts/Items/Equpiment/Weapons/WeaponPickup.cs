@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TableTopAR.Character;
+using TableTopAR.Core;
 using UnityEngine;
 
 namespace TableTopAR.Items.Equipment.Weapons
 {
     [RequireComponent(typeof(Collider))]
-    public class WeaponPickup : MonoBehaviour
+    public class WeaponPickup : MonoBehaviour, IRayCastable
     {
         [SerializeField]
         private GenericWeapon _weapon = null;
@@ -37,6 +38,16 @@ namespace TableTopAR.Items.Equipment.Weapons
             {
                 child.gameObject.SetActive(show);
             }
+        }
+
+        public bool HandleRaycast(GenericInput genericInput)
+        {
+            return true;
+        }
+
+        public CursorType GetCursorType()
+        {
+            return CursorType.PickUp;
         }
     }
 }

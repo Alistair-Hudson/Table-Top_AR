@@ -19,11 +19,8 @@ namespace TableTopAR.WorkShop
 
         void Update()
         {
-            if (Input.GetMouseButton(0))
-            {
-                Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-                ProcessRaycast(ray);
-            }
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            ProcessRaycast(ray);
         }
 #endif
     }
