@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -10,7 +11,6 @@ namespace TableTopAR.AR
     [RequireComponent(typeof(ARPlacementManager), typeof(ARPlaneManager))]
     public class ARPlaneDetectionManager : MonoBehaviour
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
         [SerializeField]
         private PlayerInput playerInputControl;
         [SerializeField]
@@ -27,7 +27,7 @@ namespace TableTopAR.AR
 
         private void Awake()
         {
-            playerInputControl.gameObject.SetActive(false);
+            //playerInputControl.gameObject.SetActive(false);
 
             placementManager = GetComponent<ARPlacementManager>();
             planeManager = GetComponent<ARPlaneManager>();
@@ -56,10 +56,7 @@ namespace TableTopAR.AR
             //searchForGameButton.SetActive(true);
             scaleSlider.SetActive(false);
             _navigationBaker.BakeNavMesh();
-            playerInputControl.gameObject.SetActive(true);
-            playerInputControl.Character = Instantiate(_charaterPrefab, Vector3.zero, Quaternion.identity).GetComponent<NavMeshAgent>();
-
-            //infoPanel.text = "Search for to enter a battle or readjust arena";
+            Instantiate(_charaterPrefab, Vector3.zero, Quaternion.identity);
         }
 
         private void SetAllPlanesState(bool state)
@@ -69,6 +66,5 @@ namespace TableTopAR.AR
                 plane.gameObject.SetActive(state);
             }
         }
-#endif
     }
 }

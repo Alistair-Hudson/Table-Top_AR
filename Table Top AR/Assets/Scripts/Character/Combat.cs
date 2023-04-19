@@ -41,6 +41,10 @@ namespace TableTopAR.Character
 
         public void EquipWeapon(GenericWeapon weapon)
         {
+            if (weapon == null)
+            {
+                return;
+            }
             _currentWeapon = weapon;
             weapon.Spawn(_rhTransform, _lhTransform, _animator);
         }

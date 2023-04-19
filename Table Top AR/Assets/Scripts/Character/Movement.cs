@@ -23,7 +23,7 @@ namespace TableTopAR.Character
         private ActionScheduler _actionScheduler;
         private Health _health;
 
-        private void Awake()
+        private void Start()
         {
             _navMesh = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
@@ -58,7 +58,7 @@ namespace TableTopAR.Character
             _navMesh.isStopped = true;
         }
 
-        #region Animation Events
+#region Animation Events
         private void FootR()
         {
 
@@ -68,7 +68,7 @@ namespace TableTopAR.Character
         {
 
         }
-        #endregion
+#endregion
 
         public object CaptureState()
         {

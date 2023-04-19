@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -11,8 +12,12 @@ namespace TableTopAR.AR
     {
         [SerializeField]
         private Camera arCamera;
+        public Camera ARCamera { get => arCamera; }
         [SerializeField]
         private GameObject _terrain;
+        [SerializeField]
+        private RawImage _rayCastPointImage;
+        public RawImage RayCastPointImage { get => _rayCastPointImage; }
 
         private ARRaycastManager raycastManager;
         private static List<ARRaycastHit> raycastHits = new List<ARRaycastHit>();

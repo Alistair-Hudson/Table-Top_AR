@@ -52,7 +52,7 @@ namespace TableTopAR.Core
                 return;
             }
             if (InteractWithComponent(ray)) 
-            { 
+            {
                 return; 
             }
             if (InteractWithMovement(ray))
@@ -63,14 +63,19 @@ namespace TableTopAR.Core
             SetCursor(CursorType.None);
         }
 
-        protected virtual void SetCursor(CursorType cursorType)
+        private void SetCursor(CursorType cursorType)
         {
-            if(cursorType == _cachedCursorType)
+            if (cursorType == _cachedCursorType)
             {
                 return;
             }
             _cachedCursorType = cursorType;
             CursorMapping cursorMapping = GetCursor(cursorType);
+            SetCursorImp(cursorMapping);
+        }
+
+        protected virtual void SetCursorImp(CursorMapping cursorMapping)
+        {
             Cursor.SetCursor(cursorMapping.Texture, cursorMapping.Hotspot, CursorMode.Auto);
         }
 
