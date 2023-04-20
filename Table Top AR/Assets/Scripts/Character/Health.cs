@@ -5,12 +5,21 @@ using UnityEngine;
 using TableTopAR.Saving;
 using TableTopAR.Stats;
 using System;
+using UnityEngine.Events;
 
 namespace TableTopAR.Character
 {
     [RequireComponent(typeof(Animator))]
     public class Health : MonoBehaviour, ISaveable
     {
+        [System.Serializable]
+        public class TakeDamageEvent : UnityEvent<float>
+        {
+        }
+
+        [SerializeField]
+        private TakeDamageEvent takeDamage;
+
         private float _maxHealth = -1;
         private Animator _animator;
         private float _currentHealth = -1;
@@ -42,6 +51,7 @@ namespace TableTopAR.Character
 
         public void TakeDamage(GameObject instigator, float damage)
         {
+            takeDamage.Invoke(damage);
             _currentHealth -= damage;
             if (_currentHealth <= 0)
             {
