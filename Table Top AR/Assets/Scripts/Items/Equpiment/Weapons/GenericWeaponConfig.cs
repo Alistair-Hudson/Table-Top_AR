@@ -8,10 +8,10 @@ using UnityEngine;
 namespace TableTopAR.Items.Equipment.Weapons
 {
     [CreateAssetMenu(fileName = "GenericWeapon", menuName = "ScriptableObjects/Items/Equipment/GenericWeapon", order = 0)]
-    public class GenericWeapon : ScriptableObject
+    public class GenericWeaponConfig : ScriptableObject
     {
         [SerializeField]
-        private GameObject _weaponPrefab = null;
+        private Weapon _weaponPrefab = null;
         [SerializeField]
         private AnimatorOverrideController _weaponOverride = null;
         [SerializeField]
@@ -36,14 +36,14 @@ namespace TableTopAR.Items.Equipment.Weapons
 
         public bool HasProjectile { get => projectilePrefab == null; }
 
-        public void Spawn(Transform rhTransform, Transform lhTransform, Animator animator) {
+        public Weapon Spawn(Transform rhTransform, Transform lhTransform, Animator animator) {
 
             DestroyCurrentWeapon(rhTransform, lhTransform);
-
+            Weapon weapon = null;
             if (_weaponPrefab != null)
             {
                 Transform handTransform = isRighthanded ? rhTransform : lhTransform;
-                var weapon = Instantiate(_weaponPrefab, handTransform);
+                weapon = Instantiate(_weaponPrefab, handTransform);
                 weapon.name = weaponName;
             }
             if (_weaponOverride != null)
@@ -58,6 +58,7 @@ namespace TableTopAR.Items.Equipment.Weapons
                     animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
                 }
             }
+            return weapon;
         }
 
         private void DestroyCurrentWeapon(Transform rhTransform, Transform lhTransform)

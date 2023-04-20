@@ -29,7 +29,7 @@ namespace TableTopAR.UI.DamageText
             }
         }
 
-        public void Spawn(float damageAmount)
+        public void Spawn(float damageAmount, DamageType damageType)
         {
             var dt = Instantiate(damageTextPrefab, transform);
             dt.SetText(damageAmount.ToString());

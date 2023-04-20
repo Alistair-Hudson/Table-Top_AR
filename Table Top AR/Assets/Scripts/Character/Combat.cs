@@ -16,14 +16,15 @@ namespace TableTopAR.Character
         [SerializeField]
         private Transform _lhTransform = null;
         [SerializeField]
-        private GenericWeapon _defaultWeapon = null;
+        private GenericWeaponConfig _defaultWeapon = null;
 
         private CombatTarget _target;
         private Movement _movement;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
         private float _timeSinceLastAttack = Mathf.Infinity;
-        private GenericWeapon _currentWeapon = null;
+        private GenericWeaponConfig _currentWeaponConfig = null;
+        private Weapon _currentWeapon = null;
         private BaseStats baseStats;
 
         private void Start()
@@ -33,20 +34,20 @@ namespace TableTopAR.Character
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
             
-            if (_currentWeapon == null)
+            if (_currentWeaponConfig == null)
             {
                 EquipWeapon(_defaultWeapon);
             }
         }
 
-        public void EquipWeapon(GenericWeapon weapon)
+        public void EquipWeapon(GenericWeaponConfig weapon)
         {
             if (weapon == null)
             {
                 return;
             }
-            _currentWeapon = weapon;
-            weapon.Spawn(_rhTransform, _lhTransform, _animator);
+            _currentWeaponConfig = weapon;
+            _currentWeapon = weapon.Spawn(_rhTransform, _lhTransform, _animator);
         }
 
         private void Update()
@@ -57,7 +58,7 @@ namespace TableTopAR.Character
             {
                 return;
             }
-            if (Vector3.Distance(transform.position, _target.transform.position) > _currentWeapon.CombatRannge)
+            if (Vector3.Distance(transform.position, _target.transform.position) > _currentWeaponConfig.CombatRannge)
             {
                 _movement.SetDestination(_target.transform.position);
             }
@@ -75,7 +76,7 @@ namespace TableTopAR.Character
                 return;
             }
 
-            if (_timeSinceLastAttack >= _currentWeapon.TimeBetweenAttacks)
+            if (_timeSinceLastAttack >= _currentWeaponConfig.TimeBetweenAttacks)
             {
                 transform.LookAt(_target.transform);
                 _animator.ResetTrigger("stopAttack");
@@ -111,22 +112,24 @@ namespace TableTopAR.Character
             }
             float baseDamage = baseStats.GetStat(Stats.Stats.BaseDamage);
             _target.CharacterHealth.TakeDamage(gameObject, baseDamage);
+            _currentWeapon?.OnHit();
         }
 
         private void Shoot()
         {
-            _currentWeapon.FireProjectile(_rhTransform, _lhTransform, _target.GetComponent<Health>(), gameObject, baseStats.GetStat(Stats.Stats.BaseDamage));
+            _currentWeaponConfig.FireProjectile(_rhTransform, _lhTransform, _target.GetComponent<Health>(), gameObject, baseStats.GetStat(Stats.Stats.BaseDamage));
+            _currentWeapon.OnShoot();
         }
 
         public object CaptureState()
         {
-            return _currentWeapon.name;
+            return _currentWeaponConfig.name;
         }
 
         public void RestoreState(object state)
         {
             string weaponName = (string)state;
-            GenericWeapon weapon = Resources.Load<GenericWeapon>("Weapons/" + weaponName);
+            GenericWeaponConfig weapon = Resources.Load<GenericWeaponConfig>("Weapons/" + weaponName);
             if (weapon == null)
             {
                 weapon = _defaultWeapon;
@@ -139,7 +142,7 @@ namespace TableTopAR.Character
             switch (stat)
             {
                 case Stats.Stats.BaseDamage:
-                    yield return _currentWeapon.WeaponDamage;
+                    yield return _currentWeaponConfig.WeaponDamage;
                     break;
                 default:
                     yield return 0;
@@ -152,7 +155,7 @@ namespace TableTopAR.Character
             switch (stat)
             {
                 case Stats.Stats.BaseDamage:
-                    yield return _currentWeapon.WeaponDamageBonus;
+                    yield return _currentWeaponConfig.WeaponDamageBonus;
                     break;
                 default:
                     yield return 0;

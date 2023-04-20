@@ -27,6 +27,7 @@ namespace TableTopAR.Core
         private CursorMapping[] cursorMappings = null;
 
         private Movement _movement;
+        public Movement Movement { get => _movement; }
         private Combat _combat;
         public Combat Combat { get => _combat; }
         private Health _health;

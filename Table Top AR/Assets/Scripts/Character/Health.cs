@@ -13,7 +13,7 @@ namespace TableTopAR.Character
     public class Health : MonoBehaviour, ISaveable
     {
         [System.Serializable]
-        public class TakeDamageEvent : UnityEvent<float>
+        public class TakeDamageEvent : UnityEvent<float, DamageType>
         {
         }
 
@@ -51,7 +51,7 @@ namespace TableTopAR.Character
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-            takeDamage.Invoke(damage);
+            takeDamage.Invoke(damage, DamageType.Physical);
             _currentHealth -= damage;
             if (_currentHealth <= 0)
             {
@@ -63,6 +63,12 @@ namespace TableTopAR.Character
                     experience.GainExperience(GetComponent<BaseStats>().GetStat(Stats.Stats.XPReward));
                 }
             }
+        }
+
+        public void RestoreHealth(float restore)
+        {
+            takeDamage.Invoke(restore, DamageType.Healing);
+            _currentHealth = Mathf.Min(_maxHealth, _currentHealth + restore);
         }
 
         public object CaptureState()

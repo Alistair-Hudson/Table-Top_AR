@@ -11,7 +11,7 @@ namespace TableTopAR.Items.Equipment.Weapons
     public class WeaponPickup : MonoBehaviour, IRayCastable
     {
         [SerializeField]
-        private GenericWeapon _weapon = null;
+        private GenericWeaponConfig _weapon = null;
         [SerializeField]
         private float respawnTime = 10;
 
@@ -42,6 +42,10 @@ namespace TableTopAR.Items.Equipment.Weapons
 
         public bool HandleRaycast(GenericInput genericInput)
         {
+            if (Input.GetMouseButtonDown(0) || Input.touchCount > 0)
+            {
+                genericInput.Movement.SetDestination(transform.position);
+            }
             return true;
         }
 

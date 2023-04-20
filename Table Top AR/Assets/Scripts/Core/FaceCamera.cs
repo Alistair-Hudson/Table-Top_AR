@@ -6,7 +6,7 @@ namespace TableTopAR.Core
 {
     public class FaceCamera : MonoBehaviour
     {
-        private void Update()
+        private void LateUpdate()
         {
             transform.forward = Camera.main.transform.forward;
         }
