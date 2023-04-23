@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_Male_King_01
       objectReference: {fileID: 0}
+    - target: {fileID: 115648, guid: 5ad43ee3802caa04ab0928a13c462a56, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 495996, guid: 5ad43ee3802caa04ab0928a13c462a56, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -66,11 +70,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 496924, guid: 5ad43ee3802caa04ab0928a13c462a56, type: 3}
   m_PrefabInstance: {fileID: 1269421382191309878}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1269421382191280974 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 497528, guid: 5ad43ee3802caa04ab0928a13c462a56, type: 3}
-  m_PrefabInstance: {fileID: 1269421382191309878}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1269421382191281482 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 495996, guid: 5ad43ee3802caa04ab0928a13c462a56, type: 3}
@@ -86,11 +85,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -3373168213790596809, guid: de4d949d923b7b54693e68761235fb85, type: 3}
       propertyPath: m_Height
-      value: 2.4481344
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -3373168213790596809, guid: de4d949d923b7b54693e68761235fb85, type: 3}
       propertyPath: m_Center.y
-      value: 0.7240672
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 239139832871784388, guid: de4d949d923b7b54693e68761235fb85, type: 3}
       propertyPath: m_RootOrder
@@ -157,21 +156,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: e630b03a33a54584cb9feaeaf1e7b83e, type: 2}
     - target: {fileID: 7679283875964071525, guid: de4d949d923b7b54693e68761235fb85, type: 3}
-      propertyPath: _lhTransform
-      value: 
-      objectReference: {fileID: 1269421382191280974}
-    - target: {fileID: 7679283875964071525, guid: de4d949d923b7b54693e68761235fb85, type: 3}
-      propertyPath: _rhTransform
-      value: 
-      objectReference: {fileID: 1269421382191280426}
-    - target: {fileID: 7679283875964071525, guid: de4d949d923b7b54693e68761235fb85, type: 3}
       propertyPath: _weaponPrefab
       value: 
       objectReference: {fileID: 187911565899494493, guid: eb72ac6a247dab441a35f922f509fa2c, type: 3}
     - target: {fileID: 7679283875964071525, guid: de4d949d923b7b54693e68761235fb85, type: 3}
       propertyPath: _defaultWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: 44cbcebcbfbec734c9e591a1bc53afb3, type: 2}
+      objectReference: {fileID: 11400000, guid: e630b03a33a54584cb9feaeaf1e7b83e, type: 2}
     - target: {fileID: 7679283875964071525, guid: de4d949d923b7b54693e68761235fb85, type: 3}
       propertyPath: _handTransform
       value: 
@@ -227,7 +218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxNavProjection: 1
-  maxNavPathLength: 40
   cursorMappings:
   - Type: 0
     Texture: {fileID: 2800000, guid: 21628736160fcc9488493401da3ef621, type: 3}
@@ -244,8 +234,6 @@ MonoBehaviour:
   - Type: 4
     Texture: {fileID: 2800000, guid: 5235a45d7adbb4346a2152298d55bff9, type: 3}
     Hotspot: {x: 0, y: 0}
-  _arCamera: {fileID: 0}
-  _rayCastPointImage: {fileID: 0}
 --- !u!114 &-8499244859860663920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,7 +259,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxNavProjection: 1
-  maxNavPathLength: 40
   cursorMappings:
   - Type: 0
     Texture: {fileID: 2800000, guid: 21628736160fcc9488493401da3ef621, type: 3}

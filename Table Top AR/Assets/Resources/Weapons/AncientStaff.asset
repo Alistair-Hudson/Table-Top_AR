@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b493b9b2b69015408fa2826f160c762, type: 3}
+  m_Name: AncientStaff
+  m_EditorClassIdentifier: 
+  _weaponPrefab: {fileID: 4163464756277729398, guid: b30f7f8b281fca049835f50251ff63fd, type: 3}
+  _weaponOverride: {fileID: 22100000, guid: e950929d276344940a9b1cd85d7eeba8, type: 2}
+  _combatRange: 1
+  _timeBewteenAttacks: 1.5
+  _weaponDamage: 5
+  weaponDamageBonus: 0
+  isRighthanded: 1
+  projectilePrefab: {fileID: 0}

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b493b9b2b69015408fa2826f160c762, type: 3}
+  m_Name: AncientDualSwords
+  m_EditorClassIdentifier: 
+  _weaponPrefab: {fileID: 7582210552534727049, guid: 6f72d8fb1ea3a234c96c630ce87d3890, type: 3}
+  _weaponOverride: {fileID: 22100000, guid: f0b2500b6c76d594391ec0a2e017d899, type: 2}
+  _combatRange: 2
+  _timeBewteenAttacks: 1.5
+  _weaponDamage: 5
+  weaponDamageBonus: 0
+  isRighthanded: 1
+  projectilePrefab: {fileID: 0}
