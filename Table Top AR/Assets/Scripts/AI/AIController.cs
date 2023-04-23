@@ -15,14 +15,19 @@ namespace TableTopAR.AI
         [SerializeField]
         private float _suspectTime = 2f;
         [SerializeField]
+        private float _aggroCoolDown = 2f;
+        [SerializeField]
         private PatrolPath _patrolPath;
         [SerializeField]
         private float _waypointTolerence = 0.5f;
         [SerializeField]
         private float _maxWayPointDwellTime = 5f;
+        [SerializeField]
+        private float _alertDist = 5f;
         
         private Vector3 _guadPos;
         private float _timeSinceSuspected = Mathf.Infinity;
+        private float _timeSinceAgrro = Mathf.Infinity;
         private float _timeSinceArrivedAtWaypoint = Mathf.Infinity;
         private float _wayPointDwellTime;
         private int _currentWaypoint = 0;
@@ -51,10 +56,11 @@ namespace TableTopAR.AI
             {
                 return;
             }
-            if (Vector3.Distance(transform.position, _player.transform.position) < _chaseDistance)
+            if (Vector3.Distance(transform.position, _player.transform.position) < _chaseDistance || _timeSinceAgrro < _aggroCoolDown)
             {
                 _timeSinceSuspected = 0;
                 _combat.SetAttackTarget(_player.GetComponent<CombatTarget>());
+                AgrroMob();
             }
             else if (_timeSinceSuspected < _suspectTime)
             {
@@ -66,6 +72,25 @@ namespace TableTopAR.AI
                 Patrol();
                 _timeSinceArrivedAtWaypoint += Time.deltaTime;
             }
+            _timeSinceAgrro += Time.deltaTime;
+        }
+
+        private void AgrroMob()
+        {
+            var hits = Physics.SphereCastAll(transform.position, _alertDist, Vector3.up, 0);
+            foreach (var hit in hits)
+            {
+                if (hit.collider.TryGetComponent<AIController>(out var ai))
+                {
+                    ai.Aggro();
+                }
+            }
+        }
+
+        public void Aggro()
+        {
+            _timeSinceAgrro = 0;
+            _combat.SetAttackTarget(_player.GetComponent<CombatTarget>());
         }
 
         private void Patrol()

@@ -87,7 +87,15 @@ namespace TableTopAR.Character
 
         public bool CanAttack(CombatTarget combatTarget)
         {
-            return !combatTarget.CharacterHealth.IsDead;
+            if (combatTarget.CharacterHealth.IsDead)
+            {
+                return false;
+            }
+            if (!_movement.CanMoveTo(combatTarget.transform.position) && Vector3.Distance(transform.position, combatTarget.transform.position) < _currentWeaponConfig.CombatRannge)
+            {
+                return false;
+            }
+            return true;
         }
 
         public void SetAttackTarget(CombatTarget combatTarget)

@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 7500678482983303644}
     m_Modifications:
     - target: {fileID: 1293356793197548, guid: 0d42bc61d684259409d481c6f5dd5d5c, type: 3}
@@ -56,10 +57,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d42bc61d684259409d481c6f5dd5d5c, type: 3}
 --- !u!4 &6649060366496239423 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4743577955424826, guid: 0d42bc61d684259409d481c6f5dd5d5c, type: 3}
+  m_PrefabInstance: {fileID: 6653768757860390149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6649409664300392771 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4958464907473990, guid: 0d42bc61d684259409d481c6f5dd5d5c, type: 3}
   m_PrefabInstance: {fileID: 6653768757860390149}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6649477626763480479 stripped
@@ -72,11 +81,40 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -6194378427594439233, guid: de4d949d923b7b54693e68761235fb85, type: 3}
       propertyPath: _maxHealth
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -6194378427594439233, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -6194378427594439233, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6194378427594439233, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3286430612039223294}
+    - target: {fileID: -6194378427594439233, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -6194378427594439233, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Aggro
+      objectReference: {fileID: 0}
+    - target: {fileID: -6194378427594439233, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TableTopAR.AI.AIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: -6194378427594439233, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: -3373168213790596809, guid: de4d949d923b7b54693e68761235fb85, type: 3}
       propertyPath: m_Height
@@ -167,6 +205,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6649060366496239423}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 239139832871784388, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6649409664300392771}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6205622684725198835, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3286430612039223294}
+    - targetCorrespondingSourceObject: {fileID: 6205622684725198835, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4802614804264392351}
   m_SourcePrefab: {fileID: 100100000, guid: de4d949d923b7b54693e68761235fb85, type: 3}
 --- !u!1 &4420449944351803883 stripped
 GameObject:

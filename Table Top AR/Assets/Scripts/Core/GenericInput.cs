@@ -22,8 +22,6 @@ namespace TableTopAR.Core
         [SerializeField]
         private float maxNavProjection = 1f;
         [SerializeField]
-        private float maxNavPathLength = 40f;
-        [SerializeField]
         private CursorMapping[] cursorMappings = null;
 
         private Movement _movement;
@@ -136,6 +134,10 @@ namespace TableTopAR.Core
         {
             if (RayCastNavMesh(ray, out Vector3 destination))
             {
+                if (!_movement.CanMoveTo(destination))
+                {
+                    return false;
+                }
                 if (Input.GetMouseButtonDown(0) || Input.touchCount > 0)
                 {
                     _movement.SetDestination(destination);
@@ -159,32 +161,8 @@ namespace TableTopAR.Core
                 return false;
             }
 
-            NavMeshPath path = new NavMeshPath();
-            if (!NavMesh.CalculatePath(transform.position, navHit.position, NavMesh.AllAreas, path))
-            {
-                return false;
-            }
-            if (path.status != NavMeshPathStatus.PathComplete)
-            {
-                return false;
-            }
-            if(GetPathLength(path) > maxNavPathLength)
-            {
-                return false;
-            }
-
             target = navHit.position;
             return true;
-        }
-
-        private float GetPathLength(NavMeshPath path)
-        {
-            float distance = 0;
-            for (int i = 0; i < path.corners.Length - 1; i++)
-            {
-                distance += Vector3.Distance(path.corners[i], path.corners[i + 1]);
-            }
-            return distance;
         }
     }
 }

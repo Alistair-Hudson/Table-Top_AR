@@ -18,6 +18,9 @@ namespace TableTopAR.Character
             public SerializableVector3 Rotation;
         }
 
+        [SerializeField]
+        private float maxNavPathLength = 40f;
+
         private NavMeshAgent _navMesh;
         private Animator _animator;
         private ActionScheduler _actionScheduler;
@@ -36,6 +39,36 @@ namespace TableTopAR.Character
             _navMesh.enabled = !_health.IsDead;
 
             UpdateAnimator();
+        }
+
+        public bool CanMoveTo(Vector3 destination)
+        {
+            NavMeshPath path = new NavMeshPath();
+            if (!NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path))
+            {
+                return false;
+            }
+            if (path.status != NavMeshPathStatus.PathComplete)
+            {
+                return false;
+            }
+            if (GetPathLength(path) > maxNavPathLength)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        private float GetPathLength(NavMeshPath path)
+        {
+            float distance = 0;
+            for (int i = 0; i < path.corners.Length - 1; i++)
+            {
+                distance += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+            }
+            return distance;
         }
 
         public void SetDestination(Vector3 destinastion)
