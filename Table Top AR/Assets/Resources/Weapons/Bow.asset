@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponPrefab: {fileID: 5195749422738850861, guid: b4577e05f500b8a46b82f41be8bf5ae7, type: 3}
   _weaponOverride: {fileID: 22100000, guid: 1e4346b801499714abb23543378f1e40, type: 2}
-  _combatRange: 10
+  _combatRange: 20
   _timeBewteenAttacks: 1.5
   _weaponDamage: 5
   weaponDamageBonus: 0
   isRighthanded: 0
-  projectilePrefab: {fileID: 0}
+  fireProjectileFromRight: 0
+  isDualWield: 0
+  projectilePrefab: {fileID: 4096546253911752132, guid: fa07015284ff3c847a6ab03f0c99313b, type: 3}

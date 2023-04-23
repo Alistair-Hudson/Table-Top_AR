@@ -19,4 +19,6 @@ MonoBehaviour:
   _weaponDamage: 5
   weaponDamageBonus: 0
   isRighthanded: 1
+  fireProjectileFromRight: 0
+  isDualWield: 1
   projectilePrefab: {fileID: 0}

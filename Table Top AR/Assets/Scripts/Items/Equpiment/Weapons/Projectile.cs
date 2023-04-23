@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TableTopAR.Character;
 using UnityEngine;
 
-namespace TableTopAR.Core
+namespace TableTopAR.Items.Equipment.Weapons
 {
     public class Projectile : MonoBehaviour
     {
@@ -38,7 +38,7 @@ namespace TableTopAR.Core
                 transform.LookAt(GetAimLocation());
             }
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
-            
+
             if ((maxLifeTime -= Time.deltaTime) <= 0)
             {
                 Destroy(gameObject);
@@ -51,7 +51,6 @@ namespace TableTopAR.Core
             {
                 return Target.transform.position + Vector3.up * targetCollider.height / 2;
             }
-
             return Target.transform.position;
         }
 

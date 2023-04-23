@@ -28,6 +28,10 @@ namespace TableTopAR.Items.Equipment.Weapons
         public float WeaponDamageBonus { get => weaponDamageBonus; }
         [SerializeField]
         private bool isRighthanded = true;
+        [SerializeField]
+        private bool fireProjectileFromRight = false;
+        [SerializeField]
+        private bool isDualWield = false;
 
         [SerializeField]
         private Projectile projectilePrefab = null;
@@ -42,9 +46,20 @@ namespace TableTopAR.Items.Equipment.Weapons
             Weapon weapon = null;
             if (_weaponPrefab != null)
             {
-                Transform handTransform = isRighthanded ? rhTransform : lhTransform;
-                weapon = Instantiate(_weaponPrefab, handTransform);
-                weapon.name = weaponName;
+                if (isDualWield)
+                {
+                    weapon = Instantiate(_weaponPrefab, lhTransform);
+                    weapon.name = weaponName + "Left";
+                    weapon.transform.localScale *= -1;
+                    weapon = Instantiate(_weaponPrefab, rhTransform);
+                    weapon.name = weaponName + "Right";
+                }
+                else
+                {
+                    Transform handTransform = isRighthanded ? rhTransform : lhTransform;
+                    weapon = Instantiate(_weaponPrefab, handTransform);
+                    weapon.name = weaponName;
+                }
             }
             if (_weaponOverride != null)
             {
@@ -77,8 +92,8 @@ namespace TableTopAR.Items.Equipment.Weapons
 
         public void FireProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator, float characterBaseDamage)
         {
-            Transform handTransform = isRighthanded ? rightHand : leftHand;
-            Projectile projectileInstance = Instantiate(projectilePrefab, handTransform);
+            Transform handTransform = fireProjectileFromRight ? rightHand : leftHand;
+            Projectile projectileInstance = Instantiate(projectilePrefab, handTransform.position, Quaternion.identity);
             projectileInstance.Target = target;
             projectileInstance.Instigator = instigator;
             projectileInstance.Damage = characterBaseDamage;

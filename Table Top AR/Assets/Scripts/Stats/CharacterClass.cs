@@ -5,6 +5,11 @@ namespace TableTopAR.Stats
         Player = 0,
         Grunt,
         Mage,
-        Archer
+        Archer,
+        SkeletonSoldier,
+        SkeletonArcher,
+        SkeletonKnight,
+        AncientWarrior,
+        AncientQueen
     }
 }
