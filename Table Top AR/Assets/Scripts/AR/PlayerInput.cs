@@ -26,6 +26,7 @@ namespace TableTopAR.AR
 
         void Update()
         {
+            if (!ARPlaneDetectionManager.IsPlaying) return;
             Ray ray = _arCamera.ScreenPointToRay(_rayCastPointTransform.position);
             ProcessRaycast(ray);
         }

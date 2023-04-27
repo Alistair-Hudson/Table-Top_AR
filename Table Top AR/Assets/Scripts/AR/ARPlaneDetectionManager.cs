@@ -25,6 +25,9 @@ namespace TableTopAR.AR
         private ARPlaneManager planeManager;
         private ARPlacementManager placementManager;
 
+        private static bool _isPlaying = false;
+        public static bool IsPlaying { get => _isPlaying; }
+
         private void Awake()
         {
             //playerInputControl.gameObject.SetActive(false);
@@ -55,8 +58,9 @@ namespace TableTopAR.AR
             //adjustButton.SetActive(true);
             //searchForGameButton.SetActive(true);
             scaleSlider.SetActive(false);
-            _navigationBaker.BakeNavMesh();
-            Instantiate(_charaterPrefab, Vector3.zero, Quaternion.identity);
+            _isPlaying = true;
+            //_navigationBaker.BakeNavMesh();
+            //Instantiate(_charaterPrefab, Vector3.zero, Quaternion.identity);
         }
 
         private void SetAllPlanesState(bool state)
