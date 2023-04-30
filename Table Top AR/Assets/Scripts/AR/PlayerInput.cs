@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using TableTopAR.Character;
 using TableTopAR.Core;
 using UnityEngine.UI;
+using Unity.XR.CoreUtils;
 
 namespace TableTopAR.AR
 {
@@ -18,15 +19,15 @@ namespace TableTopAR.AR
         protected override void Awake()
         {
             base.Awake();
-            var placmentManager = FindObjectOfType<ARPlacementManager>();
-            _rayCastPointImage = placmentManager.RayCastPointImage;
+            var arComponents = FindObjectOfType<XROrigin>().GetComponent<ARComponentsPassThrough>();
+            _rayCastPointImage = arComponents.RayCastPoint;
             _rayCastPointTransform = _rayCastPointImage.transform;
-            _arCamera = placmentManager.ARCamera;
+            _arCamera = arComponents.ARCamera;
         }
 
         void Update()
         {
-            if (!ARPlaneDetectionManager.IsPlaying) return;
+            //if (!ARPlaneDetectionManager.IsPlaying) return;
             Ray ray = _arCamera.ScreenPointToRay(_rayCastPointTransform.position);
             ProcessRaycast(ray);
         }

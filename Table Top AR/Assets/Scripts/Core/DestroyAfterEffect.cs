@@ -7,15 +7,15 @@ namespace TableTopAR.Core
     [RequireComponent(typeof(ParticleSystem))]
     public class DestroyAfterEffect : MonoBehaviour
     {
-        private ParticleSystem particleSystem;
+        private ParticleSystem _particleSystem;
 
         private void Awake()
         {
-            particleSystem = GetComponent<ParticleSystem>();
+            _particleSystem = GetComponent<ParticleSystem>();
         }
         void Update()
         {
-            if (!particleSystem.IsAlive())
+            if (!_particleSystem.IsAlive())
             {
                 Destroy(gameObject);
             }

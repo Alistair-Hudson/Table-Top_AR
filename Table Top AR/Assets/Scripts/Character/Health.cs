@@ -17,8 +17,7 @@ namespace TableTopAR.Character
         {
         }
 
-        [SerializeField]
-        private TakeDamageEvent takeDamage;
+        public TakeDamageEvent OnTakeDamage;
 
         private float _maxHealth = -1;
         private Animator _animator;
@@ -51,7 +50,7 @@ namespace TableTopAR.Character
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-            takeDamage.Invoke(damage, DamageType.Physical);
+            OnTakeDamage.Invoke(damage, DamageType.Physical);
             _currentHealth -= damage;
             if (_currentHealth <= 0)
             {
@@ -67,7 +66,7 @@ namespace TableTopAR.Character
 
         public void RestoreHealth(float restore)
         {
-            takeDamage.Invoke(restore, DamageType.Healing);
+            OnTakeDamage.Invoke(restore, DamageType.Healing);
             _currentHealth = Mathf.Min(_maxHealth, _currentHealth + restore);
         }
 
