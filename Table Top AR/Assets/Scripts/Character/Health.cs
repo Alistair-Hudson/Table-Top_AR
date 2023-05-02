@@ -40,18 +40,20 @@ namespace TableTopAR.Character
                 _currentHealth = _maxHealth;
             }
             _animator = GetComponent<Animator>();
+            OnTakeDamage.Invoke(0, DamageType.Invalid);
         }
 
         private void UpdateHealth()
         {
             _maxHealth = baseStats.GetStat(Stats.Stats.Health);
             _currentHealth = _maxHealth;
+            OnTakeDamage.Invoke(0, DamageType.Invalid);
         }
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-            OnTakeDamage.Invoke(damage, DamageType.Physical);
             _currentHealth -= damage;
+            OnTakeDamage.Invoke(damage, DamageType.Physical);
             if (_currentHealth <= 0)
             {
                 isDead = true;

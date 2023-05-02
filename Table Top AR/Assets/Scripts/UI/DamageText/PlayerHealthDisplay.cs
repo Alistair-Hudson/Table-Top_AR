@@ -11,7 +11,9 @@ namespace TableTopAR.UI.PlayerUI
     public class PlayerHealthDisplay : MonoBehaviour
     {
         [SerializeField]
-        private Image _healthDisplay = null; 
+        private Image _healthDisplay = null;
+        [SerializeField]
+        private TMPro.TMP_Text _healthText = null;
 
         private Health _health = null;
 
@@ -19,12 +21,12 @@ namespace TableTopAR.UI.PlayerUI
         {
             _health = GetComponentInParent<Health>();
             _health.OnTakeDamage.AddListener(UpdateHealthDisplay);
-            _healthDisplay.fillAmount = _health.CurrentHealth / _health.MaxHealth;
         }
 
         private void UpdateHealthDisplay(float arg0, DamageType arg1)
         {
             _healthDisplay.fillAmount = _health.CurrentHealth / _health.MaxHealth;
+            _healthText.text = $"{_health.CurrentHealth.ToString("0")}/{_health.MaxHealth.ToString("0")}";
         }
     }
 }

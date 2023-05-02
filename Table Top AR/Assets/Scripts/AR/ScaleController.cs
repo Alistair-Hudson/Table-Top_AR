@@ -26,7 +26,7 @@ namespace TableTopAR.AR
 
         public void OnSliderValueChange(float value)
         {
-            _xrOrigin.transform.localPosition = Vector3.one * value;
+            _xrOrigin.transform.localScale = Vector3.one * value;
         }
     }
 }

@@ -71,6 +71,7 @@ namespace TableTopAR.Items.Equipment.Weapons
                     Destroy(toDestory);
                 }
                 Destroy(gameObject, lifeAfterImpact);
+                Target = null;
             }
         }
     }

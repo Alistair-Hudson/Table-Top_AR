@@ -14,7 +14,8 @@ namespace TableTopAR.AR
         private Camera arCamera;
         public Camera ARCamera { get => arCamera; }
         [SerializeField]
-        private GameObject _level;
+        private VirtualTable _virtualTable;
+        public VirtualTable VirtualTable { get => _virtualTable; }
         [SerializeField]
         private RawImage _rayCastPointImage;
         public RawImage RayCastPointImage { get => _rayCastPointImage; }
@@ -38,7 +39,7 @@ namespace TableTopAR.AR
                 Pose hitPose = raycastHits[0].pose;
 
                 Vector3 posPlacement = hitPose.position;
-                _level.transform.position = posPlacement;
+                _virtualTable.transform.position = posPlacement;
             }
         }
     }

@@ -65,6 +65,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7aa776f254f4c934b919a237205029ca, type: 3}
+--- !u!1 &7266999267489970124 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 129598, guid: 7aa776f254f4c934b919a237205029ca, type: 3}
+  m_PrefabInstance: {fileID: 7266999267489910258}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7266999267490053994 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 406168, guid: 7aa776f254f4c934b919a237205029ca, type: 3}
@@ -86,6 +91,14 @@ PrefabInstance:
       propertyPath: speed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4480529814554060182, guid: a877ef5b004cf5d478edc6c21d6b557c, type: 3}
+      propertyPath: destroyOnHit.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4480529814554060182, guid: a877ef5b004cf5d478edc6c21d6b557c, type: 3}
+      propertyPath: destroyOnHit.Array.data[0]
+      value: 
+      objectReference: {fileID: 7266999267489970124}
     - target: {fileID: 5156190274626502941, guid: a877ef5b004cf5d478edc6c21d6b557c, type: 3}
       propertyPath: m_RootOrder
       value: 0

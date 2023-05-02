@@ -12,15 +12,9 @@ namespace TableTopAR.AR
     public class ARPlaneDetectionManager : MonoBehaviour
     {
         [SerializeField]
-        private PlayerInput playerInputControl;
-        [SerializeField]
         private Button placeButton;
         [SerializeField]
         private GameObject scaleSlider;
-        [SerializeField]
-        private NavigationBaker _navigationBaker;
-        [SerializeField]
-        private GameObject _charaterPrefab;
 
         private ARPlaneManager planeManager;
         private ARPlacementManager placementManager;
@@ -30,8 +24,6 @@ namespace TableTopAR.AR
 
         private void Awake()
         {
-            //playerInputControl.gameObject.SetActive(false);
-
             placementManager = GetComponent<ARPlacementManager>();
             planeManager = GetComponent<ARPlaneManager>();
 
@@ -41,26 +33,21 @@ namespace TableTopAR.AR
         void Start()
         {
             placeButton.gameObject.SetActive(true);
-            //adjustButton.SetActive(false);
-            //searchForGameButton.SetActive(false);
             scaleSlider.SetActive(true);
-
-            //infoPanel.text = "Move Phone to detect planes and place Arena";
         }
 
         public void DisableARPlacement()
         {
             SetAllPlanesState(false);
             planeManager.enabled = false;
-            placementManager.enabled = false;
 
+            placementManager.VirtualTable.SpawnLevel();
+            placementManager.enabled = false;
+            
             placeButton.gameObject.SetActive(false);
-            //adjustButton.SetActive(true);
-            //searchForGameButton.SetActive(true);
             scaleSlider.SetActive(false);
+
             _isPlaying = true;
-            //_navigationBaker.BakeNavMesh();
-            //Instantiate(_charaterPrefab, Vector3.zero, Quaternion.identity);
         }
 
         private void SetAllPlanesState(bool state)
