@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TableTopAR.Items.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,7 @@ namespace TableTopAR.UI.Inventory
             _iconImage = GetComponent<Image>(); 
         }
 
-        public void SetItem(Sprite item)
+        public void SetItem(InventoryItem item)
         {
             if (item == null)
             {
@@ -24,16 +25,7 @@ namespace TableTopAR.UI.Inventory
             }
 
             _iconImage.enabled = true;
-            _iconImage.sprite = item;
-        }
-
-        public Sprite GetItem()
-        {
-            if (!_iconImage.enabled)
-            {
-                return null;
-            }
-            return _iconImage.sprite;
+            _iconImage.sprite = item.GetIcon();
         }
     }
 }
