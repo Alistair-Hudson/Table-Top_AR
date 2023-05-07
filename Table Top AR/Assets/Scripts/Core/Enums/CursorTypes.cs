@@ -6,6 +6,7 @@ namespace TableTopAR.Core
         Move,
         Combat,
         UI,
-        PickUp
+        PickUp,
+        FullPickup
     }
 }
