@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TableTopAR.Items.PickUp;
+using TableTopAR.Items.Pickups;
 using UnityEngine;
 
 namespace TableTopAR.Items.Inventory

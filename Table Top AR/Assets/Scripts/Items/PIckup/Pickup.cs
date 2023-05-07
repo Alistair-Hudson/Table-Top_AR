@@ -4,7 +4,7 @@ using TableTopAR.Core;
 using TableTopAR.Items.Inventory;
 using UnityEngine;
 
-namespace TableTopAR.Items.PickUp
+namespace TableTopAR.Items.Pickups
 {
     public class Pickup : MonoBehaviour
     {

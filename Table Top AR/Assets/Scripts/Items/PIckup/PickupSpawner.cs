@@ -4,7 +4,7 @@ using TableTopAR.Items.Inventory;
 using TableTopAR.Saving;
 using UnityEngine;
 
-namespace TableTopAR.Items.PickUp
+namespace TableTopAR.Items.Pickups
 {
     public class PickupSpawner : MonoBehaviour, ISaveable
     {

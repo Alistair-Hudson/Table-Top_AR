@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TableTopAR.Core;
 using UnityEngine;
 
-namespace TableTopAR.Items.PickUp
+namespace TableTopAR.Items.Pickups
 {
     [RequireComponent(typeof(Pickup))]
     public class ClickablePickup : MonoBehaviour, IRayCastable
