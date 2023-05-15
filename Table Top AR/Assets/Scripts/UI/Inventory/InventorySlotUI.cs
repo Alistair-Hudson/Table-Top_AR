@@ -1,10 +1,11 @@
 using GameDevTV.Core.UI.Dragging;
+using TableTopAR.Core;
 using TableTopAR.Items.Inventory;
 using UnityEngine;
 
 namespace TableTopAR.UI.Inventory
 {
-    public class InventorySlotUI : MonoBehaviour, IDragContainer<InventoryItem>
+    public class InventorySlotUI : MonoBehaviour, IDragContainer<InventoryItem>, IItemHolder
     {
         [SerializeField]
         private InventoryItemIcon icon = null;

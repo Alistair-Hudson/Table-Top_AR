@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 5fc6d315-38f1-4b2b-b65c-c381b5f3f4e6
   displayName: Dagger
-  description: 
+  description: This is sharp and pointy
   icon: {fileID: 21300000, guid: 45b131bd81d7d49439aef2159828393a, type: 3}
   pickup: {fileID: 1810997155272224301, guid: 977a6746110b76347a5259103f830c77, type: 3}
   stackable: 0
