@@ -51,5 +51,17 @@ namespace TableTopAR.UI.Inventory
                 }
             }
         }
+
+        public void SetItem(InventoryItem item)
+        {
+            if (item == null)
+            {
+                _iconImage.enabled = false;
+                return;
+            }
+
+            _iconImage.enabled = true;
+            _iconImage.sprite = item.GetIcon();
+        }
     }
 }
