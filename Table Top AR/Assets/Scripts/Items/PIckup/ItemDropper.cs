@@ -13,14 +13,15 @@ namespace TableTopAR.Items.Pickups
         {
             public string ItemID;
             public SerializableVector3 Position;
+            public int Number;
         }
 
         //STATE
         private List<Pickup> _droppedItems = new List<Pickup>();
 
-        public void DropItem(InventoryItem item)
+        public void DropItem(InventoryItem item, int number)
         {
-            SpawnPickup(item, GetDropLocation());
+            SpawnPickup(item, GetDropLocation(), number);
         }
 
         private void RemoveDestroyedDrops()
@@ -41,9 +42,9 @@ namespace TableTopAR.Items.Pickups
             return transform.position;
         }
 
-        public void SpawnPickup(InventoryItem item, Vector3 spawnLocation)
+        public void SpawnPickup(InventoryItem item, Vector3 spawnLocation, int number)
         {
-            var pickup = item.SpawnPickup(spawnLocation);
+            var pickup = item.SpawnPickup(spawnLocation, number);
             _droppedItems.Add(pickup);
         }
 
@@ -55,6 +56,7 @@ namespace TableTopAR.Items.Pickups
             {
                 droppedItemsList[i].ItemID = _droppedItems[i].Item.GetItemID();
                 droppedItemsList[i].Position = new SerializableVector3(_droppedItems[i].transform.position);
+                droppedItemsList[i].Number = _droppedItems[i].Number;
             }
             return droppedItemsList;
         }
@@ -66,7 +68,8 @@ namespace TableTopAR.Items.Pickups
             {
                 var pickupItem = InventoryItem.GetFromID(item.ItemID);
                 Vector3 position = item.Position.ToVector();
-                SpawnPickup(pickupItem, position);
+                int number = item.Number;
+                SpawnPickup(pickupItem, position, number);
             }
         }
     }

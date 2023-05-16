@@ -11,6 +11,8 @@ namespace TableTopAR.Items.Pickups
         //CONFIG
         [SerializeField]
         private InventoryItem _item = null;
+        [SerializeField]
+        private int _number = 1;
 
         public bool IsCollected { get => GetPickup() == null; }
 
@@ -26,7 +28,7 @@ namespace TableTopAR.Items.Pickups
 
         private void SpawnPickup()
         {
-            var spawnedPickup = _item.SpawnPickup(transform.position);
+            var spawnedPickup = _item.SpawnPickup(transform.position, _number);
             spawnedPickup.transform.SetParent(transform);
         }
 

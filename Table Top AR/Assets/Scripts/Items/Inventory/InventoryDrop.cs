@@ -17,7 +17,7 @@ namespace TableTopAR.Items.Inventory
         public void AddItems(InventoryItem item, int number)
         {
             var player = FindAnyObjectByType<GenericInput>();
-            player.GetComponent<ItemDropper>().DropItem(item);
+            player.GetComponent<ItemDropper>().DropItem(item, number);
         }
     }
 }

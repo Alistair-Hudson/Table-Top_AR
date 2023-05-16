@@ -13,12 +13,18 @@ namespace TableTopAR.Items.Inventory
     /// </summary>
     public class PlayerInventory : MonoBehaviour, ISaveable
     {
+        public struct InventorySlot
+        {
+            public InventoryItem Item;
+            public int Number;
+        }
+
         // CONFIG DATA
         [Tooltip("Allowed size")]
         [SerializeField] int inventorySize = 16;
 
         // STATE
-        InventoryItem[] slots;
+        InventorySlot[] slots;
 
         // PUBLIC
          
@@ -57,7 +63,7 @@ namespace TableTopAR.Items.Inventory
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <returns>Whether or not the item could be added.</returns>
-        public bool AddToFirstEmptySlot(InventoryItem item)
+        public bool AddToFirstEmptySlot(InventoryItem item, int number)
         {
             int i = FindSlot(item);
 
@@ -66,7 +72,8 @@ namespace TableTopAR.Items.Inventory
                 return false;
             }
 
-            slots[i] = item;
+            slots[i].Item = item;
+            slots[i].Number += number;
             if (inventoryUpdated != null)
             {
                 inventoryUpdated();
@@ -92,17 +99,27 @@ namespace TableTopAR.Items.Inventory
         /// <summary>
         /// Return the item type in the given slot.
         /// </summary>
-        public InventoryItem GetItemInSlot(int slot)
+        public InventorySlot GetItemInSlot(int slot)
         {
             return slots[slot];
+        }
+
+        public int GetNumberInSlot(int index)
+        {
+            return slots[index].Number;
         }
 
         /// <summary>
         /// Remove the item from the given slot.
         /// </summary>
-        public void RemoveFromSlot(int slot)
+        public void RemoveFromSlot(int slot, int number)
         {
-            slots[slot] = null;
+            slots[slot].Number -= number;
+            if (slots[slot].Number <= 0)
+            {
+                slots[slot].Number = 0;
+                slots[slot].Item = null;
+            }
             if (inventoryUpdated != null)
             {
                 inventoryUpdated();
@@ -117,14 +134,20 @@ namespace TableTopAR.Items.Inventory
         /// <param name="slot">The slot to attempt to add to.</param>
         /// <param name="item">The item type to add.</param>
         /// <returns>True if the item was added anywhere in the inventory.</returns>
-        public bool AddItemToSlot(int slot, InventoryItem item)
+        public bool AddItemToSlot(int slot, InventoryItem item, int number)
         {
-            if (slots[slot] != null)
+            if (slots[slot].Item != null)
             {
-                return AddToFirstEmptySlot(item);
+                return AddToFirstEmptySlot(item, number);
             }
 
-            slots[slot] = item;
+            int i = FindSlot(item);
+            if (i >= 0)
+            {
+                slot = i;
+            }
+            slots[slot].Item = item;
+            slots[slot].Number += number;
             if (inventoryUpdated != null)
             {
                 inventoryUpdated();
@@ -136,7 +159,7 @@ namespace TableTopAR.Items.Inventory
 
         private void Awake()
         {
-            slots = new InventoryItem[inventorySize];
+            slots = new InventorySlot[inventorySize];
         }
 
         /// <summary>
@@ -145,6 +168,17 @@ namespace TableTopAR.Items.Inventory
         /// <returns>-1 if no slot is found.</returns>
         private int FindSlot(InventoryItem item)
         {
+            if (!item.IsStackable())
+            {
+                return FindEmptySlot();
+            }
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (object.ReferenceEquals(slots[i].Item, item))
+                {
+                    return i;
+                }
+            }
             return FindEmptySlot();
         }
 
@@ -156,7 +190,7 @@ namespace TableTopAR.Items.Inventory
         {
             for (int i = 0; i < slots.Length; i++)
             {
-                if (slots[i] == null)
+                if (slots[i].Item == null)
                 {
                     return i;
                 }
@@ -164,25 +198,34 @@ namespace TableTopAR.Items.Inventory
             return -1;
         }
 
+        [System.Serializable]
+        private struct InventorySlotRecord
+        {
+            public string ItemID;
+            public int Number;
+        }
+
         object ISaveable.CaptureState()
         {
-            var slotStrings = new string[inventorySize];
+            var slotRecords = new InventorySlotRecord[inventorySize];
             for (int i = 0; i < inventorySize; i++)
             {
-                if (slots[i] != null)
+                if (slots[i].Item != null)
                 {
-                    slotStrings[i] = slots[i].GetItemID();
+                    slotRecords[i].ItemID = slots[i].Item.GetItemID();
+                    slotRecords[i].Number = slots[i].Number;
                 }
             }
-            return slotStrings;
+            return slotRecords;
         }
 
         void ISaveable.RestoreState(object state)
         {
-            var slotStrings = (string[])state;
+            var slotRecords = (InventorySlotRecord[])state;
             for (int i = 0; i < inventorySize; i++)
             {
-                slots[i] = InventoryItem.GetFromID(slotStrings[i]);
+                slots[i].Item = InventoryItem.GetFromID(slotRecords[i].ItemID);
+                slots[i].Number = slotRecords[i].Number;
             }
             if (inventoryUpdated != null)
             {

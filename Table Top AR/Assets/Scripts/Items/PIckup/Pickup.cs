@@ -11,6 +11,8 @@ namespace TableTopAR.Items.Pickups
         //STATE
         private InventoryItem _item;
         public InventoryItem Item { get => _item; }
+        private int _number;
+        public int Number { get => _number; }
 
         //CACHED
         private PlayerInventory _inventory;
@@ -23,14 +25,15 @@ namespace TableTopAR.Items.Pickups
             _inventory = player.GetComponent<PlayerInventory>();
         }
 
-        public void Setup(InventoryItem item)
+        public void Setup(InventoryItem item, int number)
         {
             _item = item;
+            _number = number;
         }
 
         public void PickupItem()
         {
-            if (_inventory.AddToFirstEmptySlot(_item))
+            if (_inventory.AddToFirstEmptySlot(_item, _number))
             {
                 Destroy(gameObject);
             }

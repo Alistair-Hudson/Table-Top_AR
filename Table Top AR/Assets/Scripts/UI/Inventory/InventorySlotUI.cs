@@ -17,7 +17,7 @@ namespace TableTopAR.UI.Inventory
         {
             _inventory = inventory;
             _index = index;
-            icon.SetItem(inventory.GetItemInSlot(index));
+            icon.SetItem(inventory.GetItemInSlot(index).Item, _inventory.GetNumberInSlot(index));
         }
 
         public int MaxAcceptable(InventoryItem item)
@@ -30,22 +30,22 @@ namespace TableTopAR.UI.Inventory
         }
         public void AddItems(InventoryItem item, int number)
         {
-            _inventory.AddItemToSlot(_index, item);
+            _inventory.AddItemToSlot(_index, item, number);
         }
 
         public InventoryItem GetItem()
         {
-            return _inventory.GetItemInSlot(_index);
+            return _inventory.GetItemInSlot(_index).Item;
         }
 
         public int GetNumber()
         {
-            return 1;
+            return _inventory.GetItemInSlot(_index).Number;
         }
 
         public void RemoveItems(int number)
         {
-            _inventory.RemoveFromSlot(_index);
+            _inventory.RemoveFromSlot(_index, number);
         }
     }
 }
