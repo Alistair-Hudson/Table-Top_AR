@@ -19,7 +19,7 @@ namespace TableTopAR.UI.Inventory
         private void Awake()
         {
             var player = FindObjectOfType<GenericInput>();
-            _equipment = player.GetComponent<PlayerEquipment>();
+            _equipment = GetComponentInParent<PlayerEquipment>();
             _equipment.EquipmentUpdated += RedrawUI;
         }
 
@@ -66,7 +66,7 @@ namespace TableTopAR.UI.Inventory
             {
                 return 0;
             }
-            if (_equipment != null)
+            if (_equipment == null)
             {
                 return 0;
             }

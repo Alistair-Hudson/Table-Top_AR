@@ -141,11 +141,6 @@ namespace TableTopAR.Items.Inventory
                 return AddToFirstEmptySlot(item, number);
             }
 
-            int i = FindSlot(item);
-            if (i >= 0)
-            {
-                slot = i;
-            }
             slots[slot].Item = item;
             slots[slot].Number += number;
             if (inventoryUpdated != null)

@@ -11,6 +11,7 @@ namespace TableTopAR.Items.Pickups
         //STATE
         private InventoryItem _item;
         public InventoryItem Item { get => _item; }
+        [SerializeField]
         private int _number;
         public int Number { get => _number; }
 

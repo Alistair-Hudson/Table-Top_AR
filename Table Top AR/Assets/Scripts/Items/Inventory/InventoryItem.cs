@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TableTopAR.Core;
 using TableTopAR.Items.Pickups;
 using UnityEngine;
 
@@ -13,8 +14,8 @@ namespace TableTopAR.Items.Inventory
     /// In practice, you are likely to use a subclass such as `ActionItem` or
     /// `EquipableItem`.
     /// </remarks>
-    [CreateAssetMenu(menuName = ("GameDevTV/Inventory/Item"))]
-    public class InventoryItem : ScriptableObject, ISerializationCallbackReceiver    {
+    public abstract class InventoryItem : ScriptableObject, ISerializationCallbackReceiver    
+    {
         // CONFIG DATA
         [Tooltip("Auto-generated UUID for saving/loading. Clear this field if you want to generate a new one.")]
         [SerializeField] string itemID = null;
@@ -28,6 +29,8 @@ namespace TableTopAR.Items.Inventory
         [SerializeField] Pickup pickup = null;
         [Tooltip("If true, multiple items of this type can be stacked in the same inventory slot.")]
         [SerializeField] bool stackable = false;
+        [SerializeField] float price;
+        [SerializeField] ItemCategory category = ItemCategory.None;
 
         // STATE
         static Dictionary<string, InventoryItem> itemLookupCache;
@@ -98,8 +101,19 @@ namespace TableTopAR.Items.Inventory
             return description;
         }
 
+        public float GetPrice()
+        {
+            return price;
+        }
+
+        public ItemCategory GetCategory()
+        {
+            return category;
+        }
+
+
         // PRIVATE
-        
+
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
             // Generate and save a new UUID if this is blank.

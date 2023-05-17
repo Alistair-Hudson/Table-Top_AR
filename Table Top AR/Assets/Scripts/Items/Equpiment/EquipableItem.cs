@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace TableTopAR.Items.Inventory
 {
+    [CreateAssetMenu(menuName = ("ScriptableObjects/Items/Equipment/Equipable Item"))]
     public class EquipableItem : InventoryItem
     {
         [SerializeField]

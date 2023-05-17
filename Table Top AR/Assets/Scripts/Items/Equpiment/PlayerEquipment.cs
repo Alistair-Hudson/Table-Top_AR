@@ -13,6 +13,12 @@ namespace TableTopAR.Items.Inventory
 
         public event Action EquipmentUpdated;
 
+        public static PlayerEquipment GetPlayerInventory()
+        {
+            var player = FindObjectOfType<GenericInput>();
+            return player.GetComponent<PlayerEquipment>();
+        }
+
         public EquipableItem GetItemInSlot(EquipmentType equipmentType)
         {
             if (!_equippedItems.ContainsKey(equipmentType))
@@ -36,13 +42,13 @@ namespace TableTopAR.Items.Inventory
             {
                 _equippedItems[equipmentType] = equipableItem;
             }
-            EquipmentUpdated?.Invoke();
+            EquipmentUpdated();
         }
 
         public void RemoveItem(EquipmentType equipmentType)
         {
             _equippedItems.Remove(equipmentType);
-            EquipmentUpdated?.Invoke();
+            EquipmentUpdated();
         }
 
         public object CaptureState()
