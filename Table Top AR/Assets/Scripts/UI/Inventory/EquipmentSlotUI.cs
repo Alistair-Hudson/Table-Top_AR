@@ -2,6 +2,7 @@ using GameDevTV.Core.UI.Dragging;
 using System.Collections;
 using System.Collections.Generic;
 using TableTopAR.Core;
+using TableTopAR.Items.Equipment;
 using TableTopAR.Items.Inventory;
 using UnityEngine;
 
@@ -14,12 +15,12 @@ namespace TableTopAR.UI.Inventory
         [SerializeField]
         private EquipmentType _type = EquipmentType.None;
 
-        private PlayerEquipment _equipment = null;
+        private CharacterEquipment _equipment = null;
 
         private void Awake()
         {
             var player = FindObjectOfType<GenericInput>();
-            _equipment = GetComponentInParent<PlayerEquipment>();
+            _equipment = GetComponentInParent<CharacterEquipment>();
             _equipment.EquipmentUpdated += RedrawUI;
         }
 

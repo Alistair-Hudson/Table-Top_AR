@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TableTopAR.Items.Equipment;
 using UnityEngine;
 
 
@@ -23,11 +24,16 @@ namespace TableTopAR.Stats
 
         public int CurrentLevel { get => currentLevel; }
 
-        public event Action onLevelChange;
+        public event Action OnStatsUpdate;
+
+        private void Awake()
+        {
+            experience = GetComponent<Experience>();
+            GetComponent<CharacterEquipment>().EquipmentUpdated += UpdateStats;
+        }
 
         private void Start()
         {
-            experience = GetComponent<Experience>();
             currentLevel = CalculateLevel();
             if (experience != null)
             {
@@ -49,8 +55,13 @@ namespace TableTopAR.Stats
             if (newLevel != currentLevel)
             {
                 currentLevel = newLevel;
-                onLevelChange();
+                OnStatsUpdate();
             }
+        }
+
+        private void UpdateStats()
+        {
+            OnStatsUpdate();
         }
 
         public float GetStat(Stats stat)

@@ -11,7 +11,7 @@ namespace TableTopAR.Items.Inventory
     ///
     /// This component should be placed on the GameObject tagged "Player".
     /// </summary>
-    public class PlayerInventory : MonoBehaviour, ISaveable
+    public class CharacterInventory : MonoBehaviour, ISaveable
     {
         public struct InventorySlot
         {
@@ -36,10 +36,10 @@ namespace TableTopAR.Items.Inventory
         /// <summary>
         /// Convenience for getting the player's inventory.
         /// </summary>
-        public static PlayerInventory GetPlayerInventory()
+        public static CharacterInventory GetPlayerInventory()
         {
             var player = FindObjectOfType<GenericInput>();
-            return player.GetComponent<PlayerInventory>();
+            return player.GetComponent<CharacterInventory>();
         }
 
         /// <summary>

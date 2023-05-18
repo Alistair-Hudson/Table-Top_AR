@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b493b9b2b69015408fa2826f160c762, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  itemID: 5b4415fb-ea4c-488d-8732-dce22678dafe
+  displayName: Sword
+  description: 
+  icon: {fileID: 21300000, guid: d19901b0ee3c38743a7d383bd484b0b5, type: 3}
+  pickup: {fileID: 4638242225367999560, guid: f7827bb4b3fefb94aa26e1a06426098e, type: 3}
+  stackable: 0
+  price: 0
+  category: 2
+  _type: 8
+  _additiveStatModifiers: []
+  _pecentageStatModifiers: []
   _weaponPrefab: {fileID: -5535765819808313251, guid: eb72ac6a247dab441a35f922f509fa2c, type: 3}
   _weaponOverride: {fileID: 22100000, guid: ab9b708528bb3d241aa4d733a45d16f0, type: 2}
   _combatRange: 2
@@ -19,4 +30,6 @@ MonoBehaviour:
   _weaponDamage: 5
   weaponDamageBonus: 0
   isRighthanded: 1
+  fireProjectileFromRight: 0
+  isDualWield: 0
   projectilePrefab: {fileID: 0}

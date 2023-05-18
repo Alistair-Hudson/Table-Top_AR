@@ -14,13 +14,13 @@ namespace TableTopAR.UI.Inventory
         [SerializeField] InventorySlotUI InventoryItemPrefab = null;
 
         // CACHE
-        TableTopAR.Items.Inventory.PlayerInventory playerInventory;
+        TableTopAR.Items.Inventory.CharacterInventory playerInventory;
 
         // LIFECYCLE METHODS
 
         private void Awake() 
         {
-            playerInventory = TableTopAR.Items.Inventory.PlayerInventory.GetPlayerInventory();
+            playerInventory = TableTopAR.Items.Inventory.CharacterInventory.GetPlayerInventory();
             playerInventory.inventoryUpdated += Redraw;
         }
 

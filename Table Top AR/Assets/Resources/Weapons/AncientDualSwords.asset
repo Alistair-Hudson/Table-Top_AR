@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b493b9b2b69015408fa2826f160c762, type: 3}
   m_Name: AncientDualSwords
   m_EditorClassIdentifier: 
+  itemID: 77956fd6-6f0f-48d2-95a4-b072297b6339
+  displayName: Ancient Dual Swords
+  description: 
+  icon: {fileID: 21300000, guid: d19901b0ee3c38743a7d383bd484b0b5, type: 3}
+  pickup: {fileID: 0}
+  stackable: 0
+  price: 0
+  category: 2
+  _type: 8
+  _additiveStatModifiers: []
+  _pecentageStatModifiers: []
   _weaponPrefab: {fileID: 7582210552534727049, guid: 6f72d8fb1ea3a234c96c630ce87d3890, type: 3}
   _weaponOverride: {fileID: 22100000, guid: f0b2500b6c76d594391ec0a2e017d899, type: 2}
   _combatRange: 2

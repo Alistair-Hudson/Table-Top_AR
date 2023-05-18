@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TableTopAR.Character;
 using TableTopAR.Core;
+using TableTopAR.Items.Inventory;
 using UnityEngine;
 
 namespace TableTopAR.Items.Equipment.Weapons
 {
     [CreateAssetMenu(fileName = "GenericWeapon", menuName = "ScriptableObjects/Items/Equipment/GenericWeapon", order = 0)]
-    public class GenericWeaponConfig : ScriptableObject
+    public class GenericWeaponConfig : EquipableItem
     {
         [SerializeField]
         private Weapon _weaponPrefab = null;

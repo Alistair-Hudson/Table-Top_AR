@@ -2,21 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TableTopAR.Core;
+using TableTopAR.Items.Inventory;
 using TableTopAR.Saving;
+using TableTopAR.Stats;
 using UnityEngine;
 
-namespace TableTopAR.Items.Inventory
+namespace TableTopAR.Items.Equipment
 {
-    public class PlayerEquipment : MonoBehaviour, ISaveable
+    public class CharacterEquipment : MonoBehaviour, ISaveable, IStatModifier
     {
-        private Dictionary<EquipmentType, EquipableItem> _equippedItems = new Dictionary<EquipmentType, EquipableItem>();
+        protected Dictionary<EquipmentType, EquipableItem> _equippedItems = new Dictionary<EquipmentType, EquipableItem>();
 
         public event Action EquipmentUpdated;
 
-        public static PlayerEquipment GetPlayerInventory()
+        public static CharacterEquipment GetPlayerEquipment()
         {
             var player = FindObjectOfType<GenericInput>();
-            return player.GetComponent<PlayerEquipment>();
+            return player.GetComponent<CharacterEquipment>();
         }
 
         public EquipableItem GetItemInSlot(EquipmentType equipmentType)
@@ -68,6 +70,40 @@ namespace TableTopAR.Items.Inventory
             foreach (var pair in equipedRecords)
             {
                 _equippedItems.Add(pair.Key, InventoryItem.GetFromID(pair.Value) as EquipableItem);
+            }
+        }
+
+        public IEnumerable<float> GetAdditiveModifier(Stats.Stats stat)
+        {
+            foreach (var slot in _equippedItems.Keys)
+            {
+                var item = GetItemInSlot(slot) as IStatModifier;
+                if (item == null)
+                {
+                    continue;
+                }
+
+                foreach (float modifier in item.GetAdditiveModifier(stat))
+                {
+                    yield return modifier;
+                }
+            }
+        }
+
+        public IEnumerable<float> GetPercentageModifier(Stats.Stats stat)
+        {
+            foreach (var slot in _equippedItems.Keys)
+            {
+                var item = GetItemInSlot(slot) as IStatModifier;
+                if (item == null)
+                {
+                    continue;
+                }
+
+                foreach (float modifier in item.GetPercentageModifier(stat))
+                {
+                    yield return modifier;
+                }
             }
         }
     }

@@ -11,9 +11,9 @@ namespace TableTopAR.UI.Inventory
         private InventoryItemIcon icon = null;
 
         private int _index = 0;
-        private PlayerInventory _inventory = null;
+        private CharacterInventory _inventory = null;
 
-        public void Setup(PlayerInventory inventory, int index)
+        public void Setup(CharacterInventory inventory, int index)
         {
             _inventory = inventory;
             _index = index;

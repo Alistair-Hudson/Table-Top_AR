@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b493b9b2b69015408fa2826f160c762, type: 3}
   m_Name: AncientStaff
   m_EditorClassIdentifier: 
+  itemID: d513f516-94d6-43e3-8c3d-ffde653bc7ac
+  displayName: Ancient Staff
+  description: 
+  icon: {fileID: 21300000, guid: ec22508be0cdfba4abbaeb770bef08aa, type: 3}
+  pickup: {fileID: 0}
+  stackable: 0
+  price: 0
+  category: 2
+  _type: 8
+  _additiveStatModifiers: []
+  _pecentageStatModifiers: []
   _weaponPrefab: {fileID: 4163464756277729398, guid: b30f7f8b281fca049835f50251ff63fd, type: 3}
   _weaponOverride: {fileID: 22100000, guid: e950929d276344940a9b1cd85d7eeba8, type: 2}
   _combatRange: 20

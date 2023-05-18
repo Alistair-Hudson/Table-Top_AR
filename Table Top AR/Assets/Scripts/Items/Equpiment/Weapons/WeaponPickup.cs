@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace TableTopAR.Items.Equipment.Weapons
 {
+    [Obsolete("Weapons now use the item pick up system", true)]
     [RequireComponent(typeof(Collider))]
     public class WeaponPickup : MonoBehaviour, IRayCastable
     {

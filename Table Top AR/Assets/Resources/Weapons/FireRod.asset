@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b493b9b2b69015408fa2826f160c762, type: 3}
   m_Name: FireRod
   m_EditorClassIdentifier: 
+  itemID: 27a1d982-4a39-4938-b94d-0d101d098be9
+  displayName: Fire Rod
+  description: 
+  icon: {fileID: 21300000, guid: ec22508be0cdfba4abbaeb770bef08aa, type: 3}
+  pickup: {fileID: 0}
+  stackable: 0
+  price: 0
+  category: 2
+  _type: 8
+  _additiveStatModifiers: []
+  _pecentageStatModifiers: []
   _weaponPrefab: {fileID: -8333411185822315843, guid: da918bdf92b6d2d498fc245903d06050, type: 3}
   _weaponOverride: {fileID: 22100000, guid: 7ccb621ca2ee681478621e35385428b3, type: 2}
   _combatRange: 1
@@ -19,4 +30,6 @@ MonoBehaviour:
   _weaponDamage: 5
   weaponDamageBonus: 0
   isRighthanded: 1
+  fireProjectileFromRight: 0
+  isDualWield: 0
   projectilePrefab: {fileID: 0}

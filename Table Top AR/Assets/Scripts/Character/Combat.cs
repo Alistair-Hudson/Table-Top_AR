@@ -5,11 +5,14 @@ using TableTopAR.Core;
 using TableTopAR.Items.Equipment.Weapons;
 using TableTopAR.Saving;
 using TableTopAR.Stats;
+using TableTopAR.Items.Inventory;
+using System;
+using TableTopAR.Items.Equipment;
 
 namespace TableTopAR.Character
 {
     [RequireComponent(typeof(Movement), typeof(ActionScheduler), typeof(Animator))]
-    public class Combat : MonoBehaviour, IAction, ISaveable, IStatModifier
+    public class Combat : MonoBehaviour, IAction, ISaveable
     {
         [SerializeField]
         private Transform _rhTransform = null;
@@ -19,32 +22,46 @@ namespace TableTopAR.Character
         private GenericWeaponConfig _defaultWeapon = null;
 
         private CombatTarget _target;
+        private CharacterEquipment _equipment;
         private Movement _movement;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
         private float _timeSinceLastAttack = Mathf.Infinity;
         private GenericWeaponConfig _currentWeaponConfig = null;
         private Weapon _currentWeapon = null;
-        private BaseStats baseStats;
+        private BaseStats _baseStats;
 
-        private void Start()
+        private void Awake()
         {
-            baseStats = GetComponent<BaseStats>();
+            _baseStats = GetComponent<BaseStats>();
             _movement = GetComponent<Movement>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
+            _equipment = GetComponent<CharacterEquipment>();
             
+        }
+
+        private void Start()
+        {
+            _equipment.EquipmentUpdated += UpdateWeapon;
             if (_currentWeaponConfig == null)
             {
-                EquipWeapon(_defaultWeapon);
+                _equipment.AddItem(EquipmentType.SingleHanded, _defaultWeapon);
             }
+        }
+
+        private void UpdateWeapon()
+        {
+            var weapon = _equipment.GetItemInSlot(EquipmentType.SingleHanded) as GenericWeaponConfig;
+            EquipWeapon(weapon);
+
         }
 
         public void EquipWeapon(GenericWeaponConfig weapon)
         {
             if (weapon == null)
             {
-                return;
+                weapon = Resources.Load<GenericWeaponConfig>("Weapons/Unarmed");
             }
             _currentWeaponConfig = weapon;
             _currentWeapon = weapon.Spawn(_rhTransform, _lhTransform, _animator);
@@ -118,14 +135,14 @@ namespace TableTopAR.Character
             {
                 return;
             }
-            float baseDamage = baseStats.GetStat(Stats.Stats.BaseDamage);
+            float baseDamage = _baseStats.GetStat(Stats.Stats.BaseDamage);
             _target.CharacterHealth.TakeDamage(gameObject, baseDamage);
             _currentWeapon?.OnHit();
         }
 
         private void Shoot()
         {
-            _currentWeaponConfig.FireProjectile(_rhTransform, _lhTransform, _target.GetComponent<Health>(), gameObject, baseStats.GetStat(Stats.Stats.BaseDamage));
+            _currentWeaponConfig.FireProjectile(_rhTransform, _lhTransform, _target.GetComponent<Health>(), gameObject, _baseStats.GetStat(Stats.Stats.BaseDamage));
             _currentWeapon.OnShoot();
         }
 
@@ -143,32 +160,6 @@ namespace TableTopAR.Character
                 weapon = _defaultWeapon;
             }
             EquipWeapon(weapon);
-        }
-
-        public IEnumerable<float> GetAdditiveModifier(Stats.Stats stat)
-        {
-            switch (stat)
-            {
-                case Stats.Stats.BaseDamage:
-                    yield return _currentWeaponConfig.WeaponDamage;
-                    break;
-                default:
-                    yield return 0;
-                    break;
-            }
-        }
-
-        public IEnumerable<float> GetPercentageModifier(Stats.Stats stat)
-        {
-            switch (stat)
-            {
-                case Stats.Stats.BaseDamage:
-                    yield return _currentWeaponConfig.WeaponDamageBonus;
-                    break;
-                default:
-                    yield return 0;
-                    break;
-            }
         }
     }
 }

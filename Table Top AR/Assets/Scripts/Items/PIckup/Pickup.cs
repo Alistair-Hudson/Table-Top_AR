@@ -16,14 +16,14 @@ namespace TableTopAR.Items.Pickups
         public int Number { get => _number; }
 
         //CACHED
-        private PlayerInventory _inventory;
+        private CharacterInventory _inventory;
 
         public bool CanBePickedUp { get =>  _inventory.HasSpaceFor(_item); }
 
         private void Awake()
         {
             var player = FindObjectOfType<GenericInput>();
-            _inventory = player.GetComponent<PlayerInventory>();
+            _inventory = player.GetComponent<CharacterInventory>();
         }
 
         public void Setup(InventoryItem item, int number)

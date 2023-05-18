@@ -18,6 +18,7 @@ namespace TableTopAR.Character
         }
 
         public TakeDamageEvent OnTakeDamage;
+        public UnityEvent OnDeath;
 
         private float _maxHealth = -1;
         private Animator _animator;
@@ -33,7 +34,7 @@ namespace TableTopAR.Character
         private void Start()
         {
             baseStats = GetComponent<BaseStats>();
-            baseStats.onLevelChange += UpdateHealth;
+            baseStats.OnStatsUpdate += UpdateHealth;
             _maxHealth = baseStats.GetStat(Stats.Stats.Health);
             if (_currentHealth < 0)
             {
@@ -45,8 +46,9 @@ namespace TableTopAR.Character
 
         private void UpdateHealth()
         {
+            var oldMaxHealth = _maxHealth;
             _maxHealth = baseStats.GetStat(Stats.Stats.Health);
-            _currentHealth = _maxHealth;
+            _currentHealth += _maxHealth - oldMaxHealth;
             OnTakeDamage.Invoke(0, DamageType.Invalid);
         }
 
@@ -59,6 +61,7 @@ namespace TableTopAR.Character
                 isDead = true;
                 GetComponent<ActionScheduler>().CancelCurrentAction();
                 _animator.SetTrigger("death");
+                OnDeath.Invoke();
                 if (instigator.TryGetComponent<Experience>(out var experience))
                 {
                     experience.GainExperience(GetComponent<BaseStats>().GetStat(Stats.Stats.XPReward));

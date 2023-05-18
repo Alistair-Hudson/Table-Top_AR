@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6815194179174551852}
   - component: {fileID: 7691827814312364365}
   m_Layer: 0
-  m_Name: Pickup
+  m_Name: PickupBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a72959d965d1749a0c75e6710985d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _number: 1
 --- !u!114 &7691827814312364365
 MonoBehaviour:
   m_ObjectHideFlags: 0
