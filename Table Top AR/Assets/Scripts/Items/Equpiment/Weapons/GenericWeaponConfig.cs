@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,34 +12,47 @@ namespace TableTopAR.Items.Equipment.Weapons
     [CreateAssetMenu(fileName = "GenericWeapon", menuName = "ScriptableObjects/Items/Equipment/GenericWeapon", order = 0)]
     public class GenericWeaponConfig : EquipableItem
     {
+        [HorizontalGroup("GameData", 75)]
+        [PreviewField(75)]
         [SerializeField]
         private Weapon _weaponPrefab = null;
-        [SerializeField]
-        private AnimatorOverrideController _weaponOverride = null;
+        
+        [VerticalGroup("GameData/Stats")]
         [SerializeField]
         private float _combatRange = 1f;
-        public float CombatRannge { get => _combatRange; }
+        [VerticalGroup("GameData/Stats")]
         [SerializeField]
         private float _timeBewteenAttacks = 1.5f;
-        public float TimeBetweenAttacks { get => _timeBewteenAttacks; }
+        [VerticalGroup("GameData/Stats")]
         [SerializeField]
         private float _weaponDamage = 5;
-        public float WeaponDamage { get => _weaponDamage; }
+        [VerticalGroup("GameData/Stats")]
         [SerializeField]
         private float weaponDamageBonus = 0;
-        public float WeaponDamageBonus { get => weaponDamageBonus; }
+        [VerticalGroup("GameData/Stats")]
         [SerializeField]
         private bool isRighthanded = true;
+        [VerticalGroup("GameData/Stats")]
         [SerializeField]
         private bool fireProjectileFromRight = false;
+        [VerticalGroup("GameData/Stats")]
         [SerializeField]
         private bool isDualWield = false;
 
+        [SerializeField]
+        private AnimatorOverrideController _weaponOverride = null;
+        
+        [PreviewField(75)]
         [SerializeField]
         private Projectile projectilePrefab = null;
         private object weapon;
         const string weaponName = "Weapon";
 
+        public float CombatRannge { get => _combatRange; }
+        public float TimeBetweenAttacks { get => _timeBewteenAttacks; }
+        public float WeaponDamage { get => _weaponDamage; }
+        public float WeaponDamageBonus { get => weaponDamageBonus; }
+        
         public bool HasProjectile { get => projectilePrefab == null; }
 
         public Weapon Spawn(Transform rhTransform, Transform lhTransform, Animator animator) {

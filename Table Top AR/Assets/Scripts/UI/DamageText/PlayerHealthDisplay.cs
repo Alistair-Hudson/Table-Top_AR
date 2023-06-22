@@ -17,7 +17,7 @@ namespace TableTopAR.UI.PlayerUI
 
         private Health _health = null;
 
-        void Start()
+        private void Start()
         {
             _health = GetComponentInParent<Health>();
             _health.OnTakeDamage.AddListener(UpdateHealthDisplay);

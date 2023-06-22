@@ -5,7 +5,9 @@ namespace TableTopAR.Stats
         Health = 0,
         XPReward,
         XPToLevel,
-        BaseDamage
+        BaseDamage,
+        Mana,
+        ManaRegen
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using TableTopAR.Core;
 using TableTopAR.Items.Pickups;
@@ -24,8 +25,10 @@ namespace TableTopAR.Items.Inventory
         [Tooltip("Item description to be displayed in UI.")]
         [SerializeField][TextArea] string description = null;
         [Tooltip("The UI icon to represent this item in the inventory.")]
+        [PreviewField(75)]
         [SerializeField] Sprite icon = null;
         [Tooltip("The prefab that should be spawned when this item is dropped.")]
+        [PreviewField(75)]
         [SerializeField] Pickup pickup = null;
         [Tooltip("If true, multiple items of this type can be stacked in the same inventory slot.")]
         [SerializeField] bool stackable = false;

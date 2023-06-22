@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TableTopAR.Character.Abilities
 {
     [CreateAssetMenu(fileName = "Ability", menuName = "ScriptableObjects/Ability")]
-    public class Ability : ScriptableObject
+    public class GenericAbility : ScriptableObject
     {
         [Tooltip("Item name to be displayed in UI.")]
         [SerializeField] 
@@ -17,11 +17,14 @@ namespace TableTopAR.Character.Abilities
         [SerializeField]
         private Sprite _icon = null;
         [SerializeField]
+        private float _manaCost = 0;
+        [SerializeField]
         private bool _isPassive = false;
 
         public string DisplayName { get => _displayName; }
         public string Description { get => _description; }
         public Sprite Icon { get => _icon; }
+        public float ManaCost { get => _manaCost; }
         public bool IsPassive { get => _isPassive; }
 
         public void UseAbility()

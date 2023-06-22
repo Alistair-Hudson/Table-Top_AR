@@ -31,7 +31,7 @@ namespace TableTopAR.UI.Inventory
                 return;
             }
 
-            _iconImage.enabled = true;
+            _iconImage.enabled = true;  
             _iconImage.sprite = item.GetIcon();
 
             if (number <= 1)

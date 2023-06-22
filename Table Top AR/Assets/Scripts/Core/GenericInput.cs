@@ -34,6 +34,7 @@ namespace TableTopAR.Core
         private Movement _movement;
         private Combat _combat;
         private Health _health;
+        private Mana _mana;
         
         public Movement Movement { get => _movement; }
         public Combat Combat { get => _combat; }
@@ -46,6 +47,7 @@ namespace TableTopAR.Core
             _movement = GetComponent<Movement>();
             _combat = GetComponent<Combat>();
             _health = GetComponent<Health>();
+            _mana = GetComponent<Mana>();
 
             var abilities = GetComponent<CharacterAbilities>().Abilities;
 
@@ -62,6 +64,10 @@ namespace TableTopAR.Core
                 abilityButton.onClick.AddListener(() =>
                 {
                     if (_health.IsDead)
+                    {
+                        return;
+                    }
+                    if (!_mana.ConsumeMana(abilities[j].ManaCost))
                     {
                         return;
                     }
