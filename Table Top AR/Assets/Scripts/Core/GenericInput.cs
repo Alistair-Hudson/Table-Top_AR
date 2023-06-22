@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TableTopAR.Character;
+using TableTopAR.Character.Abilities;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace TableTopAR.Core
 {
@@ -23,12 +25,18 @@ namespace TableTopAR.Core
         private float maxNavProjection = 1f;
         [SerializeField]
         private CursorMapping[] cursorMappings = null;
+        [SerializeField]
+        private Button _abilityButtonPrefab = null;
+        [SerializeField]
+        protected Transform _abilityButtonBar = null;
+        
 
         private Movement _movement;
-        public Movement Movement { get => _movement; }
         private Combat _combat;
-        public Combat Combat { get => _combat; }
         private Health _health;
+        
+        public Movement Movement { get => _movement; }
+        public Combat Combat { get => _combat; }
 
         private CursorType _cachedCursorType = CursorType.None;
 
@@ -38,6 +46,29 @@ namespace TableTopAR.Core
             _movement = GetComponent<Movement>();
             _combat = GetComponent<Combat>();
             _health = GetComponent<Health>();
+
+            var abilities = GetComponent<CharacterAbilities>().Abilities;
+
+            for (int i = 0; i < abilities.Count; i++)
+            {
+                int j = i;
+                var abilityButton = Instantiate(_abilityButtonPrefab, _abilityButtonBar);
+                abilityButton.GetComponentsInChildren<Image>()[1].sprite = abilities[i].Icon;
+                if (abilities[i].IsPassive)
+                {
+                    abilityButton.interactable = false;
+                    return;
+                }
+                abilityButton.onClick.AddListener(() =>
+                {
+                    if (_health.IsDead)
+                    {
+                        return;
+                    }
+                    abilities[j].UseAbility();
+                });
+
+            }
         }
 
         protected void ProcessRaycast(Ray ray)

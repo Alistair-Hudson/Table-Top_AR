@@ -15,16 +15,18 @@ namespace TableTopAR.AR
         private RawImage _rayCastPointImage = null;
         private Transform _rayCastPointTransform = null;
 
-#if UNITY_ANDROID && !UNITY_EDITOR
         protected override void Awake()
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
             base.Awake();
             var arComponents = FindObjectOfType<XROrigin>().GetComponent<ARComponentsPassThrough>();
             _rayCastPointImage = arComponents.RayCastPoint;
             _rayCastPointTransform = _rayCastPointImage.transform;
             _arCamera = arComponents.ARCamera;
+#endif
         }
 
+#if UNITY_ANDROID && !UNITY_EDITOR
         void Update()
         {
             //if (!ARPlaneDetectionManager.IsPlaying) return;
