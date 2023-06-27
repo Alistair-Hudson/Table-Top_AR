@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 271575362}
   - component: {fileID: 271575361}
   - component: {fileID: 271575360}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -843,7 +843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1759574358}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1048,7 +1048,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1622040787258578190, guid: 0cc2f3ff77c4bba4f86234c863656527, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5
+      value: -6.79
       objectReference: {fileID: 0}
     - target: {fileID: 1622040787258578190, guid: 0cc2f3ff77c4bba4f86234c863656527, type: 3}
       propertyPath: m_LocalRotation.w

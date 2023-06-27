@@ -56,11 +56,11 @@ namespace TableTopAR.Core
                 int j = i;
                 var abilityButton = Instantiate(_abilityButtonPrefab, _abilityButtonBar);
                 abilityButton.GetComponentsInChildren<Image>()[1].sprite = abilities[i].Icon;
-                if (abilities[i].IsPassive)
-                {
-                    abilityButton.interactable = false;
-                    return;
-                }
+                //if (abilities[i].IsPassive)
+                //{
+                //    abilityButton.interactable = false;
+                //    return;
+                //}
                 abilityButton.onClick.AddListener(() =>
                 {
                     if (_health.IsDead)
@@ -71,7 +71,7 @@ namespace TableTopAR.Core
                     {
                         return;
                     }
-                    abilities[j].UseAbility();
+                    abilities[j].UseAbility(gameObject);
                 });
 
             }

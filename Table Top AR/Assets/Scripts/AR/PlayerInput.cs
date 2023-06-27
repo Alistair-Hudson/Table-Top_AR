@@ -15,6 +15,9 @@ namespace TableTopAR.AR
         private RawImage _rayCastPointImage = null;
         private Transform _rayCastPointTransform = null;
 
+        public Camera ARCamera { get => _arCamera; }
+        public Transform RayCastPointTransform { get => _rayCastPointTransform; }
+
         protected override void Awake()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR

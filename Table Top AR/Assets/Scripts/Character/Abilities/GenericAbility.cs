@@ -18,18 +18,45 @@ namespace TableTopAR.Character.Abilities
         private Sprite _icon = null;
         [SerializeField]
         private float _manaCost = 0;
+
         [SerializeField]
-        private bool _isPassive = false;
+        private TargetingStrategy _targetingStrategy = null;
+        [SerializeField]
+        private FilterStrategy[] _filterStrategies = null;
+        [SerializeField]
+        private EffectStrategy[] _effectStrategies = null;
 
         public string DisplayName { get => _displayName; }
         public string Description { get => _description; }
         public Sprite Icon { get => _icon; }
         public float ManaCost { get => _manaCost; }
-        public bool IsPassive { get => _isPassive; }
 
-        public void UseAbility()
+        public void UseAbility(GameObject user)
         {
             Debug.Log($"Used {_displayName}");
+            AbilityData data = new AbilityData(user);
+            _targetingStrategy.StartTargeting(data, () =>
+            {
+                TargetAquired(data);
+            });
+        }
+
+        private void TargetAquired(AbilityData data)
+        {
+            foreach (var filter in _filterStrategies)
+            {
+                data.Targets = filter.Filter(data.Targets);
+            }
+            
+            foreach (var effect in _effectStrategies)
+            {
+                effect.StartEffect(data, EffectFinished);
+            }
+        }
+
+        private void EffectFinished()
+        {
+
         }
     }
 }

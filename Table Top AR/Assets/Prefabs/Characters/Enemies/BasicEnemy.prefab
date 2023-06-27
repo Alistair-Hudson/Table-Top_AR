@@ -164,6 +164,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6205622684725198835, guid: de4d949d923b7b54693e68761235fb85, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 7679283875964071525, guid: de4d949d923b7b54693e68761235fb85, type: 3}
       propertyPath: _weapon
       value: 

@@ -82,15 +82,15 @@ namespace TableTopAR.AI
             {
                 if (hit.collider.TryGetComponent<AIController>(out var ai))
                 {
-                    ai.Aggro();
+                    ai.Aggro(_player.GetComponent<CombatTarget>());
                 }
             }
         }
 
-        public void Aggro()
+        public void Aggro(CombatTarget target)
         {
             _timeSinceAgrro = 0;
-            _combat.SetAttackTarget(_player.GetComponent<CombatTarget>());
+            _combat.SetAttackTarget(target);
         }
 
         private void Patrol()
