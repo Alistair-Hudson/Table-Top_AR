@@ -18,12 +18,12 @@ namespace TableTopAR.Character.Abilities.Effects
             foreach (var target in data.Targets)
             {
                 var targetHealth = target.GetComponent<Health>();
-                targetHealth.StartCoroutine(PlagueCountDown(targetHealth));
+                targetHealth.StartCoroutine(PlagueCountDown(targetHealth, data));
             }
             finished?.Invoke();
         }
 
-        private IEnumerator PlagueCountDown(Health targetsHealth)
+        private IEnumerator PlagueCountDown(Health targetsHealth, AbilityData data)
         {
             float time = 0;
             while (time < plagueTime)
@@ -31,7 +31,7 @@ namespace TableTopAR.Character.Abilities.Effects
                 yield return null;
                 if (targetsHealth.IsDead)
                 {
-                    AbilityData newData = new AbilityData(targetsHealth.gameObject);
+                    AbilityData newData = new AbilityData(targetsHealth.gameObject, data.FilterStrategies, data.EffectStrategies);
                     var newTargeting = ScriptableObject.CreateInstance(typeof(AutoTargeting)) as AutoTargeting;
                     newTargeting.StartTargeting(newData, () =>
                     {
@@ -47,7 +47,15 @@ namespace TableTopAR.Character.Abilities.Effects
 
         private void TargetAquired(AbilityData data)
         {
+            foreach (var filter in data.FilterStrategies)
+            {
+                data.Targets = filter.Filter(data.Targets);
+            }
 
+            foreach (var effect in data.EffectStrategies)
+            {
+                effect.StartEffect(data, EffectFinished);
+            }
         }
 
         private void EffectFinished()

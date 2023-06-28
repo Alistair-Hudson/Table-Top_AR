@@ -18,7 +18,11 @@ namespace TableTopAR.Character.Abilities.Effects
         public override void StartEffect(AbilityData data, Action finished)
         {
 
-            Chain(0, data);
+            foreach (var target in data.Targets)
+            {
+                AbilityData newAbilityData = new AbilityData(target, data.FilterStrategies, data.EffectStrategies);
+                Chain(0, newAbilityData);
+            }
             finished?.Invoke();
         }
 
@@ -39,7 +43,20 @@ namespace TableTopAR.Character.Abilities.Effects
 
         private void TargetAquired(AbilityData data)
         {
+            foreach (var filter in data.FilterStrategies)
+            {
+                data.Targets = filter.Filter(data.Targets);
+            }
 
+            foreach (var effect in data.EffectStrategies)
+            {
+                effect.StartEffect(data, EffectFinished);
+            }
+        }
+
+        private void EffectFinished()
+        {
+            
         }
     }
 }

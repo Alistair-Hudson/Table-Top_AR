@@ -34,7 +34,7 @@ namespace TableTopAR.Character.Abilities
         public void UseAbility(GameObject user)
         {
             Debug.Log($"Used {_displayName}");
-            AbilityData data = new AbilityData(user);
+            AbilityData data = new AbilityData(user, _filterStrategies, _effectStrategies);
             _targetingStrategy.StartTargeting(data, () =>
             {
                 TargetAquired(data);
