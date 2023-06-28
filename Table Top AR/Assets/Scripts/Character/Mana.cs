@@ -57,15 +57,10 @@ namespace TableTopAR.Character
         /// </summary>
         /// <param name="mana"></param>
         /// <returns></returns>
-        public bool ConsumeMana(float mana)
+        public void ConsumeMana(float mana)
         {
-            if (mana > _currentMana)
-            {
-                return false;
-            }
             _currentMana -= mana;
             OnManaChange.Invoke();
-            return true;
         }
 
         public void RestoreMana(float restore)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,8 @@ namespace TableTopAR.Character.Abilities
         private Sprite _icon = null;
         [SerializeField]
         private float _manaCost = 0;
+        [SerializeField]
+        private float _coolDownTime = 0;
 
         [SerializeField]
         private TargetingStrategy _targetingStrategy = null;
@@ -30,9 +33,18 @@ namespace TableTopAR.Character.Abilities
         public string Description { get => _description; }
         public Sprite Icon { get => _icon; }
         public float ManaCost { get => _manaCost; }
+        public float CoolDownTime { get => _coolDownTime; }
 
         public void UseAbility(GameObject user)
         {
+            if (!CheckCooldown(user))
+            {
+                return;
+            }
+            if (!CheckMana(user))
+            {
+                return;
+            }
             Debug.Log($"Used {_displayName}");
             AbilityData data = new AbilityData(user, _filterStrategies, _effectStrategies);
             _targetingStrategy.StartTargeting(data, () =>
@@ -47,7 +59,9 @@ namespace TableTopAR.Character.Abilities
             {
                 data.Targets = filter.Filter(data.Targets);
             }
-            
+
+            data.User.GetComponent<CoolDownStore>().StartCoolDown(this, _coolDownTime);
+            data.User.GetComponent<Mana>().ConsumeMana(_manaCost);
             foreach (var effect in _effectStrategies)
             {
                 effect.StartEffect(data, EffectFinished);
@@ -57,6 +71,28 @@ namespace TableTopAR.Character.Abilities
         private void EffectFinished()
         {
 
+        }
+
+        private bool CheckCooldown(GameObject user)
+        {
+            var cooldowns = user.GetComponent<CoolDownStore>();
+            if (cooldowns.CooldownTimeRemaining(this) > 0)
+            {
+                Debug.Log("Cooldown in progress");
+                return false;
+            }
+            return true;
+        }
+
+        private bool CheckMana(GameObject user)
+        {
+            var manaPool = user.GetComponent<Mana>();
+            if (manaPool.CurrentMana < _manaCost)
+            {
+                Debug.Log("not enough mana");
+                return false;
+            }
+            return true;
         }
     }
 }

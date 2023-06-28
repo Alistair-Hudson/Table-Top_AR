@@ -65,6 +65,7 @@ namespace TableTopAR.Character.Abilities.Targeting
                         {
                             yield return null;
                         }
+                        data.TargetedPoint = rayHit.point;
                         data.Targets = GetObjectsInRadius(rayHit);
                         finished();
                         break;

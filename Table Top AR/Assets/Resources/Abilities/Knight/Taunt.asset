@@ -15,9 +15,11 @@ MonoBehaviour:
   _displayName: Taunt
   _description: Taunt nearby Enemies
   _icon: {fileID: 21300000, guid: a1ec2c0ddc0da634b85f0f465fec2d0d, type: 3}
-  _manaCost: 10
+  _manaCost: 6
+  _coolDownTime: 1
   _targetingStrategy: {fileID: 11400000, guid: 7596f63c346b4444e8c1ae1aadfd6147, type: 2}
   _filterStrategies:
   - {fileID: 11400000, guid: 92530cc5023d10d4598aa504d367fe0b, type: 2}
   _effectStrategies:
   - {fileID: 11400000, guid: 68867a78fbac8644d88a6a779ee8b827, type: 2}
+  - {fileID: 11400000, guid: 3f18da80148e65d439f54ea997d3ee64, type: 2}

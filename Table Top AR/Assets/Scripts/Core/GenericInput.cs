@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TableTopAR.Character;
 using TableTopAR.Character.Abilities;
+using TableTopAR.UI.PlayerUI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -55,7 +56,9 @@ namespace TableTopAR.Core
             {
                 int j = i;
                 var abilityButton = Instantiate(_abilityButtonPrefab, _abilityButtonBar);
-                abilityButton.GetComponentsInChildren<Image>()[1].sprite = abilities[i].Icon;
+                var passThrough = abilityButton.GetComponent<ActionSlotPassThrough>();
+                passThrough.ActionIcon.sprite = abilities[j].Icon;
+                passThrough.Ability = abilities[j];
                 //if (abilities[i].IsPassive)
                 //{
                 //    abilityButton.interactable = false;
@@ -64,10 +67,6 @@ namespace TableTopAR.Core
                 abilityButton.onClick.AddListener(() =>
                 {
                     if (_health.IsDead)
-                    {
-                        return;
-                    }
-                    if (!_mana.ConsumeMana(abilities[j].ManaCost))
                     {
                         return;
                     }

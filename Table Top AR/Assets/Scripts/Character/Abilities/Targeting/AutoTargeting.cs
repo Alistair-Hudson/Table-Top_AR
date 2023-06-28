@@ -15,6 +15,7 @@ namespace TableTopAR.Character.Abilities.Targeting
 
         public override void StartTargeting(AbilityData data, Action finished)
         {
+            data.TargetedPoint = data.User.transform.position;
             data.Targets = GetObjectsInRadius(data.User);
             finished();
         }
