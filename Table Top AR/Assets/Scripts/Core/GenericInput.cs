@@ -59,20 +59,35 @@ namespace TableTopAR.Core
                 var passThrough = abilityButton.GetComponent<ActionSlotPassThrough>();
                 passThrough.ActionIcon.sprite = abilities[j].Icon;
                 passThrough.Ability = abilities[j];
-                //if (abilities[i].IsPassive)
-                //{
-                //    abilityButton.interactable = false;
-                //    return;
-                //}
-                abilityButton.onClick.AddListener(() =>
+                if (abilities[j].IsPassive)
                 {
-                    if (_health.IsDead)
+                    abilityButton.interactable = false;
+                    StartCoroutine(RunPassiveAbility(abilities[j]));
+                }
+                else
+                {
+                    abilityButton.onClick.AddListener(() =>
                     {
-                        return;
-                    }
-                    abilities[j].UseAbility(gameObject);
-                });
+                        if (_health.IsDead)
+                        {
+                            return;
+                        }
+                        abilities[j].UseAbility(gameObject);
+                    });
+                }
 
+            }
+        }
+
+        private IEnumerator RunPassiveAbility(GenericAbility genericAbility)
+        {
+            while (true)
+            {
+                if (!_health.IsDead)
+                {
+                    genericAbility.UseAbility(gameObject);
+                }
+                yield return null;
             }
         }
 
