@@ -21,6 +21,8 @@ namespace TableTopAR.Character.Abilities
         private float _manaCost = 0;
         [SerializeField]
         private float _coolDownTime = 0;
+        [SerializeField]
+        private bool _isPassive = false;
 
         [SerializeField]
         private TargetingStrategy _targetingStrategy = null;
@@ -34,6 +36,7 @@ namespace TableTopAR.Character.Abilities
         public Sprite Icon { get => _icon; }
         public float ManaCost { get => _manaCost; }
         public float CoolDownTime { get => _coolDownTime; }
+        public bool IsPassive { get => _isPassive; }
 
         public void UseAbility(GameObject user)
         {
@@ -46,7 +49,7 @@ namespace TableTopAR.Character.Abilities
                 return;
             }
             Debug.Log($"Used {_displayName}");
-            AbilityData data = new AbilityData(user, _filterStrategies, _effectStrategies);
+            AbilityData data = new AbilityData(user, _filterStrategies, _effectStrategies, true);
             _targetingStrategy.StartTargeting(data, () =>
             {
                 TargetAquired(data);
