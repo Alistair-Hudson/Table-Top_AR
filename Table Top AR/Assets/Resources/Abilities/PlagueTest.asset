@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f30233e1398c8be49a2dfc2ff683ddcf, type: 3}
+  m_Name: PlagueTest
+  m_EditorClassIdentifier: 
+  _displayName: Plague
+  _description: 
+  _icon: {fileID: 21300000, guid: 65d466afcff75fa428a0b237f81846d6, type: 3}
+  _manaCost: 0
+  _coolDownTime: 0
+  _isPassive: 0
+  _targetingStrategy: {fileID: 11400000, guid: e0221ce291f38b6428a29b3e88da98a8, type: 2}
+  _filterStrategies:
+  - {fileID: 11400000, guid: 92530cc5023d10d4598aa504d367fe0b, type: 2}
+  - {fileID: 11400000, guid: 2249c4aac831f944bbd279f20b28efc8, type: 2}
+  _effectStrategies:
+  - {fileID: 11400000, guid: ec6380eaa908f2549b764db4e99231d5, type: 2}
+  - {fileID: 11400000, guid: b5fc0f493765f14478f47a95aa7c08fe, type: 2}
