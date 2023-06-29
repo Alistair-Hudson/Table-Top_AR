@@ -49,7 +49,7 @@ namespace TableTopAR.Character.Abilities
                 return;
             }
             Debug.Log($"Used {_displayName}");
-            AbilityData data = new AbilityData(user, _filterStrategies, _effectStrategies, true);
+            AbilityData data = new AbilityData(user, true);
             _targetingStrategy.StartTargeting(data, () =>
             {
                 TargetAquired(data);
