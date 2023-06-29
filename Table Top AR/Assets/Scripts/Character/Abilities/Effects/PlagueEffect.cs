@@ -12,13 +12,28 @@ namespace TableTopAR.Character.Abilities.Effects
     {
         [SerializeField]
         private float plagueTime = 10;
+        [SerializeField]
+        private AutoTargeting _autoTarget = null;
+        [SerializeField]
+        private FilterStrategy[] _filterStrategies;
+        [SerializeField]
+        private List<EffectStrategy> _effectStrategies = new List<EffectStrategy>();
 
         public override void StartEffect(AbilityData data, Action finished)
         {
             foreach (var target in data.Targets)
             {
                 var targetHealth = target.GetComponent<Health>();
-                targetHealth.StartCoroutine(PlagueCountDown(targetHealth, data));
+                if (targetHealth.IsDead)
+                {
+                    continue;
+                }
+                else
+                {
+                    targetHealth.StartCoroutine(PlagueCountDown(targetHealth, data));
+                    Debug.Log($"Plague has spread to {targetHealth.gameObject.name}");
+                    break;
+                }
             }
             finished?.Invoke();
         }
@@ -31,13 +46,7 @@ namespace TableTopAR.Character.Abilities.Effects
                 yield return null;
                 if (targetsHealth.IsDead)
                 {
-                    AbilityData newData = new AbilityData(targetsHealth.gameObject, data.FilterStrategies, data.EffectStrategies);
-                    var newTargeting = ScriptableObject.CreateInstance(typeof(AutoTargeting)) as AutoTargeting;
-                    newTargeting.StartTargeting(newData, () =>
-                    {
-                        TargetAquired(newData);
-                    });
-
+                    SpreadPlague(targetsHealth, data);
                     break;
                 }
 
@@ -45,14 +54,23 @@ namespace TableTopAR.Character.Abilities.Effects
             }
         }
 
+        private void SpreadPlague(Health targetsHealth, AbilityData data)
+        {
+            data.TargetedPoint = targetsHealth.transform.position;
+            _autoTarget.StartTargeting(data, () =>
+            {
+                TargetAquired(data);
+            });
+        }
+
         private void TargetAquired(AbilityData data)
         {
-            foreach (var filter in data.FilterStrategies)
+            foreach (var filter in _filterStrategies)
             {
                 data.Targets = filter.Filter(data.Targets);
             }
 
-            foreach (var effect in data.EffectStrategies)
+            foreach (var effect in _effectStrategies)
             {
                 effect.StartEffect(data, EffectFinished);
             }
