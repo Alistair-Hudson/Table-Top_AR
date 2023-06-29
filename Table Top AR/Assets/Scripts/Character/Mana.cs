@@ -52,11 +52,6 @@ namespace TableTopAR.Character
             _manaRegenPerSec = baseStats.GetStat(Stats.Stats.ManaRegen);
         }
 
-        /// <summary>
-        /// Returns true if there is enough mana, returns fals eif there is not enough
-        /// </summary>
-        /// <param name="mana"></param>
-        /// <returns></returns>
         public void ConsumeMana(float mana)
         {
             _currentMana -= mana;
