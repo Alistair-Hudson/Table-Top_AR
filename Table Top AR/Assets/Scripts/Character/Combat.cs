@@ -8,6 +8,7 @@ using TableTopAR.Stats;
 using TableTopAR.Items.Inventory;
 using System;
 using TableTopAR.Items.Equipment;
+using UnityEngine.Events;
 
 namespace TableTopAR.Character
 {
@@ -30,6 +31,8 @@ namespace TableTopAR.Character
         private GenericWeaponConfig _currentWeaponConfig = null;
         private Weapon _currentWeapon = null;
         private BaseStats _baseStats;
+
+        public UnityEvent OnAbilityCast = new UnityEvent();
 
         private void Awake()
         {
@@ -128,7 +131,7 @@ namespace TableTopAR.Character
             _target = null;
         }
 
-        //Animation Event
+        #region AnimationEvents
         private void Hit()
         {
             if (_target == null)
@@ -146,6 +149,12 @@ namespace TableTopAR.Character
             _currentWeapon.OnShoot();
         }
 
+        public void AbilityCast()
+        {
+            OnAbilityCast.Invoke();
+        }
+
+        #endregion
         public object CaptureState()
         {
             return _currentWeaponConfig.name;
@@ -161,5 +170,6 @@ namespace TableTopAR.Character
             }
             EquipWeapon(weapon);
         }
+
     }
 }
