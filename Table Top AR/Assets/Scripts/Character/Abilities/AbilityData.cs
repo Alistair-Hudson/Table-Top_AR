@@ -25,6 +25,7 @@ namespace TableTopAR.Character.Abilities
         {
             _user = user;
             _isUserCaster = isCaster;
+            _targetedPoint = user.transform.position;
         }
     }
 }
