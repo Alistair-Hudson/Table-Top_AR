@@ -14,21 +14,30 @@ namespace TableTopAR.Character.Abilities.Effects
         private int _maxChain = 10;
         [SerializeField]
         private bool _canRetarget = false;
+        [SerializeField]
+        private AutoTargeting _autoTarget = null;
+        [SerializeField]
+        private FilterStrategy[] _filterStrategies;
+        [SerializeField]
+        private List<EffectStrategy> _effectStrategies = new List<EffectStrategy>();
 
         public override void StartEffect(AbilityData data, Action finished)
         {
-
             foreach (var target in data.Targets)
             {
                 if (!_canRetarget && data.ChainedTargets.Contains(target))
                 {
                     continue;
                 }
-                AbilityData newAbilityData = new AbilityData(target, data.FilterStrategies, data.EffectStrategies);
-                newAbilityData.ChainedTargets = data.ChainedTargets;
-                newAbilityData.ChainedTargets.Add(target);
-                newAbilityData.Chained++;
-                Chain(newAbilityData);
+                else
+                {
+                    Debug.Log($"Chain targeted {target.name}");
+                    data.TargetedPoint = target.transform.position;
+                    data.ChainedTargets.Add(target);
+                    data.Chained++;
+                    Chain(data);
+                    break;
+                }
             }
             finished?.Invoke();
         }
@@ -40,8 +49,7 @@ namespace TableTopAR.Character.Abilities.Effects
                 return;
             }
 
-            var newTargeting = ScriptableObject.CreateInstance(typeof(AutoTargeting)) as AutoTargeting;
-            newTargeting.StartTargeting(data, () =>
+            _autoTarget.StartTargeting(data, () =>
             {
                 TargetAquired(data);
             });
@@ -50,12 +58,12 @@ namespace TableTopAR.Character.Abilities.Effects
 
         private void TargetAquired(AbilityData data)
         {
-            foreach (var filter in data.FilterStrategies)
+            foreach (var filter in _filterStrategies)
             {
                 data.Targets = filter.Filter(data.Targets);
             }
 
-            foreach (var effect in data.EffectStrategies)
+            foreach (var effect in _effectStrategies)
             {
                 effect.StartEffect(data, EffectFinished);
             }
