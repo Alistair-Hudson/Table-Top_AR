@@ -20,15 +20,22 @@ namespace TableTopAR.Character.Abilities.Effects
 
             foreach (var target in data.Targets)
             {
+                if (!_canRetarget && data.ChainedTargets.Contains(target))
+                {
+                    continue;
+                }
                 AbilityData newAbilityData = new AbilityData(target, data.FilterStrategies, data.EffectStrategies);
-                Chain(0, newAbilityData);
+                newAbilityData.ChainedTargets = data.ChainedTargets;
+                newAbilityData.ChainedTargets.Add(target);
+                newAbilityData.Chained++;
+                Chain(newAbilityData);
             }
             finished?.Invoke();
         }
 
-        private void Chain(int chained, AbilityData data)
+        private void Chain(AbilityData data)
         {
-            if (chained >= _maxChain)
+            if (data.Chained >= _maxChain)
             {
                 return;
             }
