@@ -15,14 +15,13 @@ namespace TableTopAR.Character.Abilities.Targeting
 
         public override void StartTargeting(AbilityData data, Action finished)
         {
-            data.TargetedPoint = data.User.transform.position;
-            data.Targets = GetObjectsInRadius(data.User);
+            data.Targets = GetObjectsInRadius(data);
             finished();
         }
 
-        private IEnumerable<GameObject> GetObjectsInRadius(GameObject user)
+        private IEnumerable<GameObject> GetObjectsInRadius(AbilityData data)
         {
-            var hits = Physics.SphereCastAll(user.transform.position, _areaEffectRadius, Vector3.up, 0);
+            var hits = Physics.SphereCastAll(data.TargetedPoint, _areaEffectRadius, Vector3.up, 0);
             foreach (var hit in hits)
             {
                 yield return hit.collider.gameObject;
