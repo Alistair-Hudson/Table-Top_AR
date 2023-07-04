@@ -171,5 +171,14 @@ namespace TableTopAR.Character
             EquipWeapon(weapon);
         }
 
+        public Transform GetHandTransform(bool getLeftHand)
+        {
+            if (getLeftHand)
+            {
+                return _lhTransform;
+            }
+            return _rhTransform;
+        }
+
     }
 }
