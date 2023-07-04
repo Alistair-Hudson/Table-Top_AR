@@ -228,6 +228,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilities:
   - {fileID: 11400000, guid: 6c57f3a4446b949498f01b50a31c8d44, type: 2}
+  - {fileID: 11400000, guid: 3b2ff93e04f30414ba6687b9761c81b5, type: 2}
+  - {fileID: 11400000, guid: 7788e46c7061223489404efbfa4ddb12, type: 2}
 --- !u!1001 &8356460000678468139
 PrefabInstance:
   m_ObjectHideFlags: 0
