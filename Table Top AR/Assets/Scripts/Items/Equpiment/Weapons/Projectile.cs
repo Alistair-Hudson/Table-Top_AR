@@ -23,6 +23,7 @@ namespace TableTopAR.Items.Equipment.Weapons
 
         public GameObject Instigator { get; set; }
         public Health Target { get; set; }
+        public Vector3 AimLocation { get; set; }
         public float Damage { get; set; }
 
         private void Start()
@@ -32,8 +33,7 @@ namespace TableTopAR.Items.Equipment.Weapons
 
         void Update()
         {
-            if (Target == null) return;
-            if (isHoming && !Target.IsDead)
+            if (isHoming && Target != null && !Target.IsDead)
             {
                 transform.LookAt(GetAimLocation());
             }
@@ -47,6 +47,10 @@ namespace TableTopAR.Items.Equipment.Weapons
 
         private Vector3 GetAimLocation()
         {
+            if (Target == null)
+            {
+                return AimLocation;
+            }
             if (Target.TryGetComponent<CapsuleCollider>(out var targetCollider))
             {
                 return Target.transform.position + Vector3.up * targetCollider.height / 2;
@@ -58,8 +62,18 @@ namespace TableTopAR.Items.Equipment.Weapons
         {
             if (other.TryGetComponent<Health>(out var hit))
             {
-                if (hit != Target) return;
-                if (hit.IsDead) return;
+                if (Target != null && hit != Target)
+                {
+                    return;
+                }
+                if (hit.IsDead)
+                {
+                    return;
+                }
+                if (hit.gameObject == Instigator)
+                {
+                    return;
+                }
                 if (onHitEffect != null)
                 {
                     Instantiate(onHitEffect, transform.position, transform.rotation);
