@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TableTopAR.Core;
 using UnityEngine;
 
 namespace TableTopAR.Character.Abilities
@@ -50,6 +51,8 @@ namespace TableTopAR.Character.Abilities
             }
             Debug.Log($"Used {_displayName}");
             AbilityData data = new AbilityData(user, true);
+            var ac = user.GetComponent<ActionScheduler>();
+            ac.StartAction(data);
             _targetingStrategy.StartTargeting(data, () =>
             {
                 TargetAquired(data);
@@ -58,6 +61,11 @@ namespace TableTopAR.Character.Abilities
 
         private void TargetAquired(AbilityData data)
         {
+            if (data.IsCanceled)
+            {
+                return;
+            }
+
             foreach (var filter in _filterStrategies)
             {
                 data.Targets = filter.Filter(data.Targets);

@@ -46,7 +46,7 @@ namespace TableTopAR.Character.Abilities.Targeting
             }
 
             _targetingLocal.gameObject.SetActive(true);
-            while (true)
+            while (!data.IsCanceled)
             {
                 Cursor.SetCursor(_cursorTexture, _cursorHotSpot, CursorMode.Auto);
 #if UNITY_EDITOR
@@ -61,13 +61,9 @@ namespace TableTopAR.Character.Abilities.Targeting
                     if (Input.GetMouseButtonDown(0) || Input.touchCount > 0)
                     {
                         //Absorbs whole input down
-                        while (Input.GetMouseButton(0) || Input.touchCount > 0)
-                        {
-                            yield return null;
-                        }
+                        yield return new WaitWhile(() => Input.GetMouseButton(0) || Input.touchCount > 0);
                         data.TargetedPoint = rayHit.point;
                         data.Targets = GetObjectsInRadius(rayHit);
-                        finished();
                         break;
                     }
                     yield return null;
@@ -78,6 +74,7 @@ namespace TableTopAR.Character.Abilities.Targeting
                 input.enabled = true;
             }
             _targetingLocal.gameObject.SetActive(false);
+            finished();
         }
 
         private IEnumerable<GameObject> GetObjectsInRadius(RaycastHit rayHit)
