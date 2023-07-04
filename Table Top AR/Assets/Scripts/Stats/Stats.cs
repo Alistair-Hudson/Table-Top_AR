@@ -7,7 +7,9 @@ namespace TableTopAR.Stats
         XPToLevel,
         BaseDamage,
         Mana,
-        ManaRegen
+        ManaRegen,
+        Armour,
+        MagicArmour
     }
 }
 
