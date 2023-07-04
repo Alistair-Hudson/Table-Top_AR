@@ -59,6 +59,7 @@ namespace TableTopAR.Core
                 var passThrough = abilityButton.GetComponent<ActionSlotPassThrough>();
                 passThrough.ActionIcon.sprite = abilities[j].Icon;
                 passThrough.Ability = abilities[j];
+                passThrough.ActionName.text = abilities[j].DisplayName;
                 if (abilities[j].IsPassive)
                 {
                     abilityButton.interactable = false;

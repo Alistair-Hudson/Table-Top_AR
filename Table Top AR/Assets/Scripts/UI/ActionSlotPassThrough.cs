@@ -12,11 +12,14 @@ namespace TableTopAR.UI.PlayerUI
         private Image _actionIcon = null;
         [SerializeField]
         private Image _coolDownOverlay = null;
+        [SerializeField]
+        private Text _actionName = null;
 
         private CoolDownStore _coolDownStore = null;
 
         public Image ActionIcon { get => _actionIcon; }
         public Image CoolDownOverlay { get => _coolDownOverlay; }
+        public Text ActionName { get => _actionName; }
         public GenericAbility Ability { get; set; }
 
         private void Start()
