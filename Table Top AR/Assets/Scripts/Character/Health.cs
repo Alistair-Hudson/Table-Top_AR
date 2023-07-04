@@ -54,7 +54,8 @@ namespace TableTopAR.Character
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-            _currentHealth -= damage;
+            BaseStats baseStats = GetComponent<BaseStats>();
+            _currentHealth -= Mathf.Max(0, damage / Mathf.Max(1, baseStats.GetStat(Stats.Stats.Armour)));
             OnTakeDamage.Invoke(damage, DamageType.Physical);
             if (_currentHealth <= 0)
             {
@@ -64,7 +65,7 @@ namespace TableTopAR.Character
                 OnDeath.Invoke();
                 if (instigator.TryGetComponent<Experience>(out var experience))
                 {
-                    experience.GainExperience(GetComponent<BaseStats>().GetStat(Stats.Stats.XPReward));
+                    experience.GainExperience(baseStats.GetStat(Stats.Stats.XPReward));
                 }
             }
         }
