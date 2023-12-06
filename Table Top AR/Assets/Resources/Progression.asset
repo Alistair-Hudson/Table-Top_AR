@@ -50,6 +50,13 @@ MonoBehaviour:
       - 1.8
       - 2
       - 2.25
+    - stat: 6
+      levels:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
   - characterClass: 1
     stats:
     - stat: 0
@@ -127,6 +134,9 @@ MonoBehaviour:
       - 70
       - 80
       - 90
+    - stat: 6
+      levels:
+      - 0
   - characterClass: 8
     stats:
     - stat: 0

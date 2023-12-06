@@ -52,8 +52,8 @@ namespace TableTopAR.Character.Abilities.Targeting
 #if UNITY_EDITOR
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 #elif UNITY_ANDROID
-            var player = user.GetComponent<PlayerInput>()
-            Ray ray = player.ARCamera.ScreenPointToRay(player.RayCastPointTransform.position);
+            var playerInput = data.User.GetComponent<AR.PlayerInput>();
+            Ray ray = playerInput.ARCamera.ScreenPointToRay(playerInput.RayCastPointTransform.position);
 #endif
                 if (Physics.Raycast(ray, out RaycastHit rayHit, float.PositiveInfinity, _layerMask))
                 {

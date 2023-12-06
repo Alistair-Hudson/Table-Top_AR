@@ -22,4 +22,4 @@ MonoBehaviour:
   _filterStrategies:
   - {fileID: 11400000, guid: 92530cc5023d10d4598aa504d367fe0b, type: 2}
   _effectStrategies:
-  - {fileID: 11400000, guid: b5fc0f493765f14478f47a95aa7c08fe, type: 2}
+  - {fileID: 11400000, guid: 949a307de5d03b74ba6e5f649641b266, type: 2}

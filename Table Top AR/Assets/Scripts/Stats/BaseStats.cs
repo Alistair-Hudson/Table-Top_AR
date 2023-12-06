@@ -55,13 +55,13 @@ namespace TableTopAR.Stats
             if (newLevel != currentLevel)
             {
                 currentLevel = newLevel;
-                OnStatsUpdate();
+                OnStatsUpdate?.Invoke();
             }
         }
 
         private void UpdateStats()
         {
-            OnStatsUpdate();
+            OnStatsUpdate?.Invoke();
         }
 
         public float GetStat(Stats stat)

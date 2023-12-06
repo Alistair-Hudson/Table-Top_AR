@@ -41,12 +41,12 @@ namespace TableTopAR.Character
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
             _equipment = GetComponent<CharacterEquipment>();
+            _equipment.EquipmentUpdated += UpdateWeapon;
             
         }
 
         private void Start()
         {
-            _equipment.EquipmentUpdated += UpdateWeapon;
             if (_currentWeaponConfig == null)
             {
                 _equipment.AddItem(EquipmentType.SingleHanded, _defaultWeapon);
